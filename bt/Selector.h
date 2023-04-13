@@ -3,13 +3,18 @@
 class Selector : public CompositeNode
 {
 public:
-  virtual bool run(Ant &ant) override
+  virtual NodeStatus run(Ant &ant) override
   {
-    for (Node *child : getChildren())
-    {                      // The generic Selector implementation
-      if (child->run(ant)) // If one child succeeds, the entire operation run() succeeds.  Failure only results if all children fail.
-        return true;
+    for (Node &child : getChildren())
+    {
+      NodeStatus status = child.run(ant);
+      // The generic Selector implementation
+      if (status == NodeStatus::SUCCESS) // If one child succeeds, the entire operation run() succeeds.  Failure only results if all children fail.
+        return NodeStatus::SUCCESS;
+
+      if (status == NodeStatus::RUNNING) // If one child is running, the entire operation run() is running.
+        return NodeStatus::RUNNING;
     }
-    return false; // All children failed so the entire run() operation fails.
+    return NodeStatus::FAILURE; // All children failed so the entire run() operation fails.
   }
 };

@@ -3,13 +3,18 @@
 class Sequence : public CompositeNode
 {
 public:
-  virtual bool run(Ant &ant) override
+  virtual NodeStatus run(Ant &ant) override
   {
-    for (Node *child : getChildren())
-    {                       // The generic Sequence implementation.
-      if (!child->run(ant)) // If one child fails, then enter operation run() fails.  Success only results if all children succeed.
-        return false;
+    for (Node &child : getChildren())
+    {
+      NodeStatus status = child.run(ant);
+      // The generic Sequence implementation.
+      if (status == NodeStatus::FAILURE) // If one child fails, then enter operation run() fails.  Success only results if all children succeed.
+        return NodeStatus::FAILURE;
+
+      if (status == NodeStatus::RUNNING) // If one child is running, the entire operation run() is running.
+        return NodeStatus::RUNNING;
     }
-    return true; // All children suceeded, so the entire run() operation succeeds.
+    return NodeStatus::SUCCESS; // All children suceeded, so the entire run() operation succeeds.
   }
 };
