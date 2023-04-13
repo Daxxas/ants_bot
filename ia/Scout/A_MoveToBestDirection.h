@@ -1,6 +1,6 @@
 #include "../../bt/Node.h"
 
-class A_WalkToEnnemy : public Node
+class A_MoveToBestDirection : public Node
 {
 public:
   virtual NodeStatus run(Ant &ant) override

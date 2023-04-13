@@ -1,4 +1,4 @@
-#include "../bt/Node.h"
+#include "../../bt/Node.h"
 
 class I_HasEnnemyNearby : public Node
 {
