@@ -2,7 +2,7 @@
 #include "Node.h"
 
 class CompositeNode : public Node
-{ //  This type of Node follows the Composite Pattern, containing a list of other Nodes.
+{ //  This type of Node follows the Composit"e Pattern, containing a list of other Nodes.
 private:
   std::list<Node *> children;
 

@@ -2,22 +2,21 @@
 
 using namespace std;
 
-//constructor
-Bot::Bot()
-{
+// constructor
+Bot::Bot(){
 
 };
 
-//plays a single game of Ants.
+// plays a single game of Ants.
 void Bot::playGame()
 {
-    //reads the game parameters and sets up
+    // reads the game parameters and sets up
     cin >> state;
     state.setup();
     endTurn();
 
-    //continues making moves while the game is not over
-    while(cin >> state)
+    // continues making moves while the game is not over
+    while (cin >> state)
     {
         state.updateVisionInformation();
         makeMoves();
@@ -25,34 +24,36 @@ void Bot::playGame()
     }
 };
 
-//makes the bots moves for the turn
+// makes the bots moves for the turn
 void Bot::makeMoves()
 {
     state.bug << "turn " << state.turn << ":" << endl;
     state.bug << state << endl;
 
-    //picks out moves for each ant
-    for(int ant=0; ant<(int)state.myAnts.size(); ant++)
+    // picks out moves for each ant
+    for (int ant = 0; ant < (int)state.myAnts.size(); ant++)
     {
-        for(int d=0; d<TDIRECTIONS; d++)
+        for (int d = 0; d < TDIRECTIONS; d++)
         {
-            Location loc = state.getLocation(state.myAnts[ant], d);
+            // Faut mettre le code la dedans
+            Location loc = state.getLocation(state.myAnts[ant].location, d);
 
-            if(!state.grid[loc.row][loc.col].isWater)
+            if (!state.grid[loc.row][loc.col].isWater)
             {
-                state.makeMove(state.myAnts[ant], d);
+                state.makeMove(state.myAnts[ant].location, d);
                 break;
             }
         }
     }
 
-    state.bug << "time taken: " << state.timer.getTime() << "ms" << endl << endl;
+    state.bug << "time taken: " << state.timer.getTime() << "ms" << endl
+              << endl;
 };
 
-//finishes the turn
+// finishes the turn
 void Bot::endTurn()
 {
-    if(state.turn > 0)
+    if (state.turn > 0)
         state.reset();
     state.turn++;
 
