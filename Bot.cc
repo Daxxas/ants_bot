@@ -1,4 +1,5 @@
 #include "Bot.h"
+#include "./ia/AIAnt.h"
 
 using namespace std;
 
@@ -35,6 +36,10 @@ void Bot::makeMoves()
     {
         for (int d = 0; d < TDIRECTIONS; d++)
         {
+            AIAnt aiAnt = AIAnt(state.myAnts[ant]);
+
+            aiAnt.run();
+
             // Faut mettre le code la dedans
             Location loc = state.getLocation(state.myAnts[ant].location, d);
 

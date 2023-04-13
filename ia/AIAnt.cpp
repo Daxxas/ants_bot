@@ -23,69 +23,69 @@ AIAnt::AIAnt(Ant &_ant) : ant(_ant)
 {
   // Soldier
   Sequence soldier = Sequence();
-  root.addChild(soldier);
+  root.addChild(&soldier);
 
   I_HasMeetingPoint hasMeetingPoint = I_HasMeetingPoint();
-  soldier.addChild(hasMeetingPoint);
+  soldier.addChild(&hasMeetingPoint);
 
   // Soldier/MeetingPoint
   Selector meetingPoint = Selector();
-  soldier.addChild(meetingPoint);
+  soldier.addChild(&meetingPoint);
 
   I_IsOnMeetingPoint isOnMeetingPoint = I_IsOnMeetingPoint();
-  meetingPoint.addChild(isOnMeetingPoint);
+  meetingPoint.addChild(&isOnMeetingPoint);
 
   A_WalkToMeetingPoint walkToMeetingPoint = A_WalkToMeetingPoint();
-  meetingPoint.addChild(walkToMeetingPoint);
+  meetingPoint.addChild(&walkToMeetingPoint);
 
   // Soldier/Attack
   Sequence attack = Sequence();
-  soldier.addChild(attack);
+  soldier.addChild(&attack);
 
   // Soldier/Attack/Keep Status
   Selector keepStatus = Selector();
-  attack.addChild(keepStatus);
+  attack.addChild(&keepStatus);
 
   I_HasEnnemyNearby hasEnnemyNearby = I_HasEnnemyNearby();
-  keepStatus.addChild(hasEnnemyNearby);
+  keepStatus.addChild(&hasEnnemyNearby);
 
   A_DeleteMeetingPoint deleteMeetingPoint = A_DeleteMeetingPoint();
-  keepStatus.addChild(deleteMeetingPoint);
+  keepStatus.addChild(&deleteMeetingPoint);
 
   // Soldier/Attack
   I_IsMoreThanEnnemy isMoreThanEnnemy = I_IsMoreThanEnnemy();
-  attack.addChild(isMoreThanEnnemy);
+  attack.addChild(&isMoreThanEnnemy);
 
   A_WalkToEnnemy walkToEnnemy = A_WalkToEnnemy();
-  attack.addChild(walkToEnnemy);
+  attack.addChild(&walkToEnnemy);
 
   // Scout
   Sequence scout = Sequence();
-  root.addChild(scout);
+  root.addChild(&scout);
 
   // Scout/Ennemy
   Selector ennemy = Selector();
-  scout.addChild(ennemy);
+  scout.addChild(&ennemy);
 
   I_NoEnnemyNearby noEnnemyNearby = I_NoEnnemyNearby();
-  ennemy.addChild(noEnnemyNearby);
+  ennemy.addChild(&noEnnemyNearby);
 
   A_PlaceMeetingPoint placeMeetingPoint = A_PlaceMeetingPoint();
-  ennemy.addChild(placeMeetingPoint);
+  ennemy.addChild(&placeMeetingPoint);
 
   // Scout/Gaze
   Selector gaze = Selector();
-  scout.addChild(gaze);
+  scout.addChild(&gaze);
 
   I_NoGazeNearby noGazeNearby = I_NoGazeNearby();
-  gaze.addChild(noGazeNearby);
+  gaze.addChild(&noGazeNearby);
 
   A_AttackGaze attackGaze = A_AttackGaze();
-  gaze.addChild(attackGaze);
+  gaze.addChild(&attackGaze);
 
   // Scout
   A_MoveToBestDirection moveToBestDirection = A_MoveToBestDirection();
-  scout.addChild(moveToBestDirection);
+  scout.addChild(&moveToBestDirection);
 
   // End and run the Behaviour Tree
   NodeStatus status = root.run(ant);

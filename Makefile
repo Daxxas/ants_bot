@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-O3 -funroll-loops -c
 LDFLAGS=-O2 -lm
-SOURCES=Ant.cc Bot.cc MyBot.cc State.cc
+SOURCES=Ant.cc ./ia/AIAnt.cpp Bot.cc MyBot.cc State.cc
 OBJECTS=$(addsuffix .o, $(basename ${SOURCES}))
 EXECUTABLE=MyBot
 

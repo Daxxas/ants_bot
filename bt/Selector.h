@@ -1,3 +1,5 @@
+#pragma once
+
 #include "CompositeNode.h"
 
 class Selector : public CompositeNode
@@ -5,9 +7,9 @@ class Selector : public CompositeNode
 public:
   virtual NodeStatus run(Ant &ant) override
   {
-    for (Node &child : getChildren())
+    for (Node *child : getChildren())
     {
-      NodeStatus status = child.run(ant);
+      NodeStatus status = child->run(ant);
       // The generic Selector implementation
       if (status == NodeStatus::SUCCESS) // If one child succeeds, the entire operation run() succeeds.  Failure only results if all children fail.
         return NodeStatus::SUCCESS;
