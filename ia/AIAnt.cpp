@@ -5,14 +5,14 @@
 #include "../bt/Sequence.h"
 
 // Include all leef
-#include "I_HasMeetingPoint.h"
-#include "I_IsOnMeetingPoint.h"
-#include "I_HasEnnemyNearby.h"
-#include "I_IsMoreThanEnnemy.h"
+#include "./Soldier/I_HasMeetingPoint.h"
+#include "./Soldier/I_IsOnMeetingPoint.h"
+#include "./Soldier/I_HasEnnemyNearby.h"
+#include "./Soldier/I_IsMoreThanEnnemy.h"
 
-#include "A_WalkToMeetingPoint.h"
-#include "A_DeleteMeetingPoint.h"
-#include "A_WalkToEnnemy.h"
+#include "./Soldier/A_WalkToMeetingPoint.h"
+#include "./Soldier/A_DeleteMeetingPoint.h"
+#include "./Soldier/A_WalkToEnnemy.h"
 
 AIAnt::AIAnt(Ant &_ant) : ant(_ant)
 {
@@ -53,6 +53,12 @@ AIAnt::AIAnt(Ant &_ant) : ant(_ant)
 
   A_WalkToEnnemy walkToEnnemy = A_WalkToEnnemy();
   attack.addChild(walkToEnnemy);
+
+  // Scout
+  Sequence scout = Sequence();
+  root.addChild(scout);
+
+  // Scout/Ennemy
 
   // End and run the Behaviour Tree
   NodeStatus status = root.run(ant);
