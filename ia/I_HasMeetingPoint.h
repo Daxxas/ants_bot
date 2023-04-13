@@ -1,7 +1,7 @@
 #include "../bt/Node.h"
 
-class HasMeetingPoint : public Node
-{ //  This type of Node follows the Composit"e Pattern, containing a list of other Nodes.
+class I_HasMeetingPoint : public Node
+{
 public:
   virtual NodeStatus run(Ant &ant) override
   {

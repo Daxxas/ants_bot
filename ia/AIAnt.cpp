@@ -5,25 +5,30 @@
 #include "../bt/Sequence.h"
 
 // Include all leef
-#include "HasMeetingPoint.h"
-#include "IsOnMeetingPoint.h"
+#include "I_HasMeetingPoint.h"
+#include "I_IsOnMeetingPoint.h"
+#include "A_WalkToMeetingPoint.h"
 
 AIAnt::AIAnt(Ant &_ant) : ant(_ant)
 {
-  // Soldier Part (left)
+  // Soldier
   Sequence soldier = Sequence();
   root.addChild(soldier);
 
-  HasMeetingPoint hasMeetingPoint = HasMeetingPoint();
+  I_HasMeetingPoint hasMeetingPoint = I_HasMeetingPoint();
   soldier.addChild(hasMeetingPoint);
 
   // Soldier -> MeetingPoint
   Selector meetingPoint = Selector();
   soldier.addChild(meetingPoint);
 
-  IsOnMeetingPoint isOnMeetingPoint = IsOnMeetingPoint();
+  I_IsOnMeetingPoint isOnMeetingPoint = I_IsOnMeetingPoint();
   meetingPoint.addChild(isOnMeetingPoint);
 
+  A_WalkToMeetingPoint walkToMeetingPoint = A_WalkToMeetingPoint();
+  meetingPoint.addChild(walkToMeetingPoint);
+
+  // End and run the Behaviour Tree
   NodeStatus status = root.run(ant);
   std::cout << "Status: " << status << " for ant " << ant << std::endl;
 }
