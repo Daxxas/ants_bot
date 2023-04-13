@@ -5,5 +5,6 @@ class HasMeetingPoint : public Node
 public:
   virtual bool run(Ant &ant) override
   {
+    return ant.hasMeetingPoint;
   }
 };

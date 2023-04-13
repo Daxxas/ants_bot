@@ -5,7 +5,9 @@
 
 struct Ant
 {
+  bool hasMeetingPoint = false;
   Location meetingPoint;
+
   Location location;
 
   Ant(Location loc);
