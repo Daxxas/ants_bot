@@ -1,6 +1,8 @@
 #ifndef LOCATION_H_
 #define LOCATION_H_
 
+#include <cmath>
+
 /*
     struct for representing locations in the grid.
 */
@@ -18,6 +20,11 @@ struct Location
         row = r;
         col = c;
     };
+
+    float distance(Location loc)
+    {
+        return sqrt(pow(row - loc.row, 2) + pow(col - loc.col, 2));
+    }
 };
 
-#endif //LOCATION_H_
+#endif // LOCATION_H_
