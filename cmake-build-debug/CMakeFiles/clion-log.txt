@@ -1,1 +1,0 @@
-CMakeLists.txt not found in D:\Dev\ants_bot Select CMakeLists.txt
