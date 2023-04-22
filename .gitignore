@@ -33,6 +33,7 @@
 
 /.idea
 /.vs
+/.vscode
 cmake-build-debug
 
 MyBot
