@@ -1,11 +1,11 @@
-#include "../../bt/Node.h"
+#include "../../bt/BT_Node.h"
 
-class A_PlaceMeetingPoint : public Node
+class A_WalkToEnnemy : public BT_Node
 {
 public:
   virtual NodeStatus run(Ant &ant) override
   {
     // TODO: Implement this method.
-    return NodeStatus::FAILURE;
+    return NodeStatus::RUNNING;
   }
 };

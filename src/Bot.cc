@@ -1,5 +1,5 @@
 #include "Bot.h"
-#include "../ia/AIAnt.h"
+#include "../AI/AIAnt.h"
 
 using namespace std;
 

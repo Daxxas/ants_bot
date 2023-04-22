@@ -33,5 +33,6 @@
 
 /.idea
 /.vs
+cmake-build-debug
 
 MyBot

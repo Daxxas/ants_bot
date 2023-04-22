@@ -1,16 +1,16 @@
 #pragma once
 
-#include "CompositeNode.h"
+#include "BT_CompositeNode.h"
 
-class Sequence : public CompositeNode
+class BT_Sequence : public BT_CompositeNode
 {
 public:
   virtual NodeStatus run(Ant &ant) override
   {
-    for (Node *child : getChildren())
+    for (BT_Node *child : getChildren())
     {
       NodeStatus status = child->run(ant);
-      // The generic Sequence implementation.
+      // The generic BT_Sequence implementation.
       if (status == NodeStatus::FAILURE) // If one child fails, then enter operation run() fails.  Success only results if all children succeed.
         return NodeStatus::FAILURE;
 

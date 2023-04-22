@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "AIAnt.h"
-#include "../bt/Selector.h"
-#include "../bt/Sequence.h"
+#include "../bt/BT_Selector.h"
+#include "../bt/BT_Sequence.h"
 
 // Include all leef
 #include "./Soldier/I_HasMeetingPoint.h"
@@ -22,14 +22,14 @@
 AIAnt::AIAnt(Ant &_ant) : ant(_ant)
 {
   // Soldier
-  Sequence soldier = Sequence();
+  BT_Sequence soldier = BT_Sequence();
   root.addChild(&soldier);
 
   I_HasMeetingPoint hasMeetingPoint = I_HasMeetingPoint();
   soldier.addChild(&hasMeetingPoint);
 
   // Soldier/MeetingPoint
-  Selector meetingPoint = Selector();
+  BT_Selector meetingPoint = BT_Selector();
   soldier.addChild(&meetingPoint);
 
   I_IsOnMeetingPoint isOnMeetingPoint = I_IsOnMeetingPoint();
@@ -39,11 +39,11 @@ AIAnt::AIAnt(Ant &_ant) : ant(_ant)
   meetingPoint.addChild(&walkToMeetingPoint);
 
   // Soldier/Attack
-  Sequence attack = Sequence();
+  BT_Sequence attack = BT_Sequence();
   soldier.addChild(&attack);
 
   // Soldier/Attack/Keep Status
-  Selector keepStatus = Selector();
+  BT_Selector keepStatus = BT_Selector();
   attack.addChild(&keepStatus);
 
   I_HasEnnemyNearby hasEnnemyNearby = I_HasEnnemyNearby();
@@ -60,11 +60,11 @@ AIAnt::AIAnt(Ant &_ant) : ant(_ant)
   attack.addChild(&walkToEnnemy);
 
   // Scout
-  Sequence scout = Sequence();
+  BT_Sequence scout = BT_Sequence();
   root.addChild(&scout);
 
   // Scout/Ennemy
-  Selector ennemy = Selector();
+  BT_Selector ennemy = BT_Selector();
   scout.addChild(&ennemy);
 
   I_NoEnnemyNearby noEnnemyNearby = I_NoEnnemyNearby();
@@ -74,7 +74,7 @@ AIAnt::AIAnt(Ant &_ant) : ant(_ant)
   ennemy.addChild(&placeMeetingPoint);
 
   // Scout/Gaze
-  Selector gaze = Selector();
+  BT_Selector gaze = BT_Selector();
   scout.addChild(&gaze);
 
   I_NoGazeNearby noGazeNearby = I_NoGazeNearby();

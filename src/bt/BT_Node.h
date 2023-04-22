@@ -9,7 +9,7 @@ enum NodeStatus : short
 	RUNNING
 };
 
-class Node
+class BT_Node
 { // This class represents each node in the behaviour tree.
 public:
 	virtual NodeStatus run(Ant &ant) = 0;

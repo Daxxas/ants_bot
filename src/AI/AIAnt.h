@@ -1,11 +1,11 @@
 #include "../Ant.h"
-#include "../bt/Selector.h"
+#include "../bt/BT_Selector.h"
 
 struct AIAnt
 {
 private:
   Ant &ant;
-  Selector root;
+  BT_Selector root;
 
 public:
   AIAnt(Ant &ant);

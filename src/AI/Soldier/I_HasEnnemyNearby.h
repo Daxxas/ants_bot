@@ -1,6 +1,6 @@
-#include "../../bt/Node.h"
+#include "../../bt/BT_Node.h"
 
-class I_IsMoreThanEnnemy : public Node
+class I_HasEnnemyNearby : public BT_Node
 {
 public:
   virtual NodeStatus run(Ant &ant) override
