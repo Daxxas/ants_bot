@@ -19,7 +19,7 @@
 #include "./Scout/A_AttackGaze.h"
 #include "./Scout/A_MoveToBestDirection.h"
 
-AIAnt::AIAnt(Ant &_ant) : ant(_ant)
+AIAnt::AIAnt(Ant &_ant, State &_state) : ant(_ant), state(_state)
 {
   // Soldier
   BT_Sequence soldier = BT_Sequence();
@@ -88,11 +88,11 @@ AIAnt::AIAnt(Ant &_ant) : ant(_ant)
   scout.addChild(&moveToBestDirection);
 
   // End and run the Behaviour Tree
-  NodeStatus status = root.run(ant);
+  NodeStatus status = root.run(ant, state);
   std::cout << "Status: " << status << " for ant " << ant << std::endl;
 }
 
 void AIAnt::run()
 {
-  root.run(ant);
+  root.run(ant, state);
 }

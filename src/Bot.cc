@@ -36,7 +36,7 @@ void Bot::makeMoves()
     {
         for (int d = 0; d < TDIRECTIONS; d++)
         {
-            AIAnt aiAnt = AIAnt(state.myAnts[ant]);
+            AIAnt aiAnt = AIAnt(state.myAnts[ant], state);
 
             aiAnt.run();
 

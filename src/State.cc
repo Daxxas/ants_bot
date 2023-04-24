@@ -64,7 +64,7 @@ Location State::getLocation(const Location &loc, int direction)
 };
 
 /*
-    This function will update update the lastSeen value for any squares currently
+    This function will update the lastSeen value for any squares currently
     visible by one of your live ants.
 
     BE VERY CAREFUL IF YOU ARE GOING TO TRY AND MAKE THIS FUNCTION MORE EFFICIENT,
@@ -75,16 +75,16 @@ Location State::getLocation(const Location &loc, int direction)
 void State::updateVisionInformation()
 {
     std::queue<Location> locQueue;
-    Location sLoc, cLoc, nLoc;
+    Location antLoc, cLoc, nLoc;
 
-    for (int a = 0; a < (int)myAnts.size(); a++)
+    for (int i = 0; i < (int)myAnts.size(); i++)
     {
-        sLoc = myAnts[a].location;
-        locQueue.push(sLoc);
+        antLoc = myAnts[i].location;
+        locQueue.push(antLoc);
 
         std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, 0));
-        grid[sLoc.row][sLoc.col].isVisible = 1;
-        visited[sLoc.row][sLoc.col] = 1;
+        grid[antLoc.row][antLoc.col].isVisible = 1;
+        visited[antLoc.row][antLoc.col] = 1;
 
         while (!locQueue.empty())
         {
@@ -95,7 +95,7 @@ void State::updateVisionInformation()
             {
                 nLoc = getLocation(cLoc, d);
 
-                if (!visited[nLoc.row][nLoc.col] && distance(sLoc, nLoc) <= viewradius)
+                if (!visited[nLoc.row][nLoc.col] && distance(antLoc, nLoc) <= viewradius)
                 {
                     grid[nLoc.row][nLoc.col].isVisible = 1;
                     locQueue.push(nLoc);

@@ -5,11 +5,11 @@
 class BT_Sequence : public BT_CompositeNode
 {
 public:
-  virtual NodeStatus run(Ant &ant) override
+  virtual NodeStatus run(Ant &ant, State &state) override
   {
     for (BT_Node *child : getChildren())
     {
-      NodeStatus status = child->run(ant);
+      NodeStatus status = child->run(ant, state);
       // The generic BT_Sequence implementation.
       if (status == NodeStatus::FAILURE) // If one child fails, then enter operation run() fails.  Success only results if all children succeed.
         return NodeStatus::FAILURE;

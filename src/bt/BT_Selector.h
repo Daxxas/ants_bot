@@ -5,11 +5,11 @@
 class BT_Selector : public BT_CompositeNode
 {
 public:
-  virtual NodeStatus run(Ant &ant) override
+  virtual NodeStatus run(Ant &ant, State &state) override
   {
     for (BT_Node *child : getChildren())
     {
-      NodeStatus status = child->run(ant);
+      NodeStatus status = child->run(ant, state);
       // The generic BT_Selector implementation
       if (status == NodeStatus::SUCCESS) // If one child succeeds, the entire operation run() succeeds.  Failure only results if all children fail.
         return NodeStatus::SUCCESS;
