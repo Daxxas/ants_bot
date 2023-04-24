@@ -19,80 +19,89 @@
 #include "./Scout/A_AttackGaze.h"
 #include "./Scout/A_MoveToBestDirection.h"
 
-AIAnt::AIAnt(Ant &_ant, State &_state) : ant(_ant), state(_state)
+AIAnt::AIAnt()
 {
   // Soldier
-  BT_Sequence soldier = BT_Sequence();
-  root.addChild(&soldier);
+  BT_Sequence* soldier = new BT_Sequence();
+  root.addChild(soldier);
 
-  I_HasMeetingPoint hasMeetingPoint = I_HasMeetingPoint();
-  soldier.addChild(&hasMeetingPoint);
+  I_HasMeetingPoint* hasMeetingPoint = new I_HasMeetingPoint();
+  root.addChild(hasMeetingPoint);
+
 
   // Soldier/MeetingPoint
-  BT_Selector meetingPoint = BT_Selector();
-  soldier.addChild(&meetingPoint);
+  BT_Selector* meetingPoint = new BT_Selector();
+  soldier->addChild(meetingPoint);
 
-  I_IsOnMeetingPoint isOnMeetingPoint = I_IsOnMeetingPoint();
-  meetingPoint.addChild(&isOnMeetingPoint);
+  I_IsOnMeetingPoint* isOnMeetingPoint = new I_IsOnMeetingPoint();
+  meetingPoint->addChild(isOnMeetingPoint);
 
-  A_WalkToMeetingPoint walkToMeetingPoint = A_WalkToMeetingPoint();
-  meetingPoint.addChild(&walkToMeetingPoint);
+  A_WalkToMeetingPoint* walkToMeetingPoint = new A_WalkToMeetingPoint();
+  meetingPoint->addChild(walkToMeetingPoint);
 
   // Soldier/Attack
-  BT_Sequence attack = BT_Sequence();
-  soldier.addChild(&attack);
+  BT_Sequence* attack = new BT_Sequence();
+  soldier->addChild(attack);
 
   // Soldier/Attack/Keep Status
-  BT_Selector keepStatus = BT_Selector();
-  attack.addChild(&keepStatus);
+  BT_Selector* keepStatus = new BT_Selector();
+  attack->addChild(keepStatus);
 
-  I_HasEnnemyNearby hasEnnemyNearby = I_HasEnnemyNearby();
-  keepStatus.addChild(&hasEnnemyNearby);
+  I_HasEnnemyNearby* hasEnnemyNearby = new I_HasEnnemyNearby();
+  keepStatus->addChild(hasEnnemyNearby);
 
-  A_DeleteMeetingPoint deleteMeetingPoint = A_DeleteMeetingPoint();
-  keepStatus.addChild(&deleteMeetingPoint);
+  A_DeleteMeetingPoint* deleteMeetingPoint = new A_DeleteMeetingPoint();
+  keepStatus->addChild(deleteMeetingPoint);
 
   // Soldier/Attack
-  I_IsMoreThanEnnemy isMoreThanEnnemy = I_IsMoreThanEnnemy();
-  attack.addChild(&isMoreThanEnnemy);
+  I_IsMoreThanEnnemy* isMoreThanEnnemy = new I_IsMoreThanEnnemy();
+  attack->addChild(isMoreThanEnnemy);
 
-  A_WalkToEnnemy walkToEnnemy = A_WalkToEnnemy();
-  attack.addChild(&walkToEnnemy);
+  A_WalkToEnnemy* walkToEnnemy = new A_WalkToEnnemy();
+  attack->addChild(walkToEnnemy);
 
   // Scout
-  BT_Sequence scout = BT_Sequence();
-  root.addChild(&scout);
+  BT_Sequence* scout = new BT_Sequence();
+  root.addChild(scout);
 
   // Scout/Ennemy
-  BT_Selector ennemy = BT_Selector();
-  scout.addChild(&ennemy);
+  BT_Selector* ennemy = new BT_Selector();
+  scout->addChild(ennemy);
 
-  I_NoEnnemyNearby noEnnemyNearby = I_NoEnnemyNearby();
-  ennemy.addChild(&noEnnemyNearby);
+  I_NoEnnemyNearby* noEnnemyNearby = new I_NoEnnemyNearby();
+  ennemy->addChild(noEnnemyNearby);
 
-  A_PlaceMeetingPoint placeMeetingPoint = A_PlaceMeetingPoint();
-  ennemy.addChild(&placeMeetingPoint);
+  A_PlaceMeetingPoint* placeMeetingPoint = new A_PlaceMeetingPoint();
+  ennemy->addChild(placeMeetingPoint);
 
   // Scout/Gaze
-  BT_Selector gaze = BT_Selector();
-  scout.addChild(&gaze);
+  BT_Selector* gaze = new BT_Selector();
+  scout->addChild(gaze);
 
-  I_NoGazeNearby noGazeNearby = I_NoGazeNearby();
-  gaze.addChild(&noGazeNearby);
+  I_NoGazeNearby* noGazeNearby = new I_NoGazeNearby();
+  gaze->addChild(noGazeNearby);
 
-  A_AttackGaze attackGaze = A_AttackGaze();
-  gaze.addChild(&attackGaze);
+  A_AttackGaze* attackGaze = new A_AttackGaze();
+  gaze->addChild(attackGaze);
 
   // Scout
-  A_MoveToBestDirection moveToBestDirection = A_MoveToBestDirection();
-  scout.addChild(&moveToBestDirection);
+  A_MoveToBestDirection* moveToBestDirection = new A_MoveToBestDirection();
+  scout->addChild(moveToBestDirection);
 
   // End and run the Behaviour Tree
-  NodeStatus status = root.run(ant, state);
-  std::cout << "Status: " << status << " for ant " << ant << std::endl;
+  //NodeStatus status = root.run(ant, state);
+  //std::cout << "Status: " << status << " for ant " << ant << std::endl;
 }
 
-void AIAnt::run()
+AIAnt::~AIAnt()
 {
-  root.run(ant, state);
+    //TODO : Faire le delete
+    //delete pointeur;
+}
+
+void AIAnt::run(Ant* ant, State* state)
+{
+    state->bug << "Run AI ant " << ant << std::endl;
+
+    root.run(ant, state);
 }

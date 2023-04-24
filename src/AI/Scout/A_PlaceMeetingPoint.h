@@ -3,9 +3,12 @@
 class A_PlaceMeetingPoint : public BT_Node
 {
 public:
-  virtual NodeStatus run(Ant &ant, State &state) override
+  virtual NodeStatus run(Ant* ant, State* state) override
   {
-    // TODO: Implement this method.
+      state->bug << "A_PlaceMeetingPoint" << std::endl;
+
+
+      // TODO: Implement this method.
     return NodeStatus::FAILURE;
   }
 };

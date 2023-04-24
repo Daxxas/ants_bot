@@ -3,9 +3,11 @@
 class I_NoEnnemyNearby : public BT_Node
 {
 public:
-  virtual NodeStatus run(Ant &ant, State &state) override
+  virtual NodeStatus run(Ant* ant, State* state) override
   {
-    // TODO: Implement this method.
+      state->bug << "I_NoEnnemyNearby" << std::endl;
+
+      // TODO: Implement this method.
     return NodeStatus::SUCCESS;
   }
 };

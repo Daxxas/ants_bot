@@ -151,6 +151,8 @@ std::vector<Location> AStar::FindPath(State &state, Location &start, Location &t
 
         closedList[currentLoc.location.row][currentLoc.location.col] = true;
     }
+
+    return std::vector<Location>();
 }
 
 

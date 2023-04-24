@@ -3,9 +3,11 @@
 class I_HasMeetingPoint : public BT_Node
 {
 public:
-  virtual NodeStatus run(Ant &ant, State &state) override
+  NodeStatus run(Ant* ant, State* state) override
   {
-    if (ant.hasMeetingPoint)
+      state->bug << "I_HasMeetingPoint" << std::endl;
+
+    if (ant->hasMeetingPoint)
     {
       return NodeStatus::SUCCESS;
     }

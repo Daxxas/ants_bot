@@ -30,25 +30,28 @@ void Bot::makeMoves()
 {
     state.bug << "turn " << state.turn << ":" << endl;
     state.bug << state << endl;
+    AIAnt aiAnt;
+    state.bug << "init aiant" << endl;
 
     // picks out moves for each ant
     for (int ant = 0; ant < (int)state.myAnts.size(); ant++)
     {
-        for (int d = 0; d < TDIRECTIONS; d++)
-        {
-            AIAnt aiAnt = AIAnt(state.myAnts[ant], state);
+        state.bug << "loop " << ant << endl;
+        aiAnt.run(&state.myAnts[ant], &state);
 
-            aiAnt.run();
 
-            // Faut mettre le code la dedans
-            Location loc = state.getLocation(state.myAnts[ant].location, d);
-
-            if (!state.grid[loc.row][loc.col].isWater)
-            {
-                state.makeMove(state.myAnts[ant].location, d);
-                break;
-            }
-        }
+//        for (int d = 0; d < TDIRECTIONS; d++)
+//        {
+//
+//          // Faut mettre le code la dedans
+//            Location loc = state.getLocation(state.myAnts[ant].location, d);
+//
+//            if (!state.grid[loc.row][loc.col].isWater)
+//            {
+//                state.makeMove(state.myAnts[ant].location, d);
+//                break;
+//            }
+//        }
     }
 
     state.bug << "time taken: " << state.timer.getTime() << "ms" << endl
