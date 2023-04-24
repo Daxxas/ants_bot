@@ -1,4 +1,4 @@
-#include "../../bt/BT_Node.h"
+#include "../../BT/BT_Node.h"
 #include "../AStar.h"
 
 class A_MoveToBestDirection : public BT_Node

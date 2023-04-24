@@ -1,4 +1,4 @@
-#include "../../bt/BT_Node.h"
+#include "../../BT/BT_Node.h"
 
 class A_WalkToEnnemy : public BT_Node
 {

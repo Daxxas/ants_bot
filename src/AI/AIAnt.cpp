@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "AIAnt.h"
-#include "../bt/BT_Selector.h"
-#include "../bt/BT_Sequence.h"
+#include "../BT/BT_Selector.h"
+#include "../BT/BT_Sequence.h"
 
 // Include all leef
 #include "./Soldier/I_HasMeetingPoint.h"
