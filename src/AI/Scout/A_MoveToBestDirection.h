@@ -17,14 +17,12 @@ public:
         Location bestFood = Location(0,0);
         int bestFoodDistance = 1000000;
         for(auto food: state->food) {
-            for(auto myAnt: state->myAnts) {
-                if((*bfs)[food.row][food.col] < (*bfs)[myAnt.location.row][myAnt.location.col]) {
-                    bestFood = food;
-                    bestFoodDistance = (*bfs)[food.row][food.col];
-                }
+            if(bestFoodDistance > (*bfs)[food.row][food.col] && (*bfs)[food.row][food.col] >= 0) {
+                bestFood = food;
+                bestFoodDistance = (*bfs)[food.row][food.col];
             }
-            target = bestFood;
         }
+        target = bestFood;
 
         state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
 

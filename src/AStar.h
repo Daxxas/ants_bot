@@ -143,8 +143,8 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                     return MakePath(state, &allMap, target);
                 }
                 else {
-                    neighborG = currentLoc.g + currentLoc.location.manhattanDistance(neighborLocation);
-                    neighborH = neighborLocation.manhattanDistance(*target);
+                    neighborG = currentLoc.g + currentLoc.location.manhattanDistance(neighborLocation, state->rows, state->cols);
+                    neighborH = neighborLocation.manhattanDistance(*target, state->rows, state->cols);
                     neighborF = neighborG + neighborH;
                 }
 

@@ -31,9 +31,13 @@ struct Location
         return sqrt(pow(row - loc.row, 2) + pow(col - loc.col, 2));
     }
 
-    float manhattanDistance(Location loc)
+    float manhattanDistance(Location loc, int rows, int cols)
     {
-        return abs(loc.row - row) + abs(loc.col - col);
+        int d1 = abs(row - loc.row),
+                d2 = abs(col - loc.col),
+                dr = std::min(d1, rows - d1),
+                dc = std::min(d2, cols - d2);
+        return dr + dc;
     }
 
     // Overload hash

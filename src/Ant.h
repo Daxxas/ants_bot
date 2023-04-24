@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 #include "Location.h"
 
@@ -12,7 +13,7 @@ struct Ant
   bool hasMeetingPoint = false;
   Location meetingPoint;
 
-
+  std::vector<std::vector<int>>* bfsMap;
 
   Location location;
 

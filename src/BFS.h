@@ -1,13 +1,11 @@
 //
 // Created by daxxas on 24/04/2023.
 //
+#pragma once
 
 #ifndef ANTS_BOT_BFS_H
 #define ANTS_BOT_BFS_H
 
-
-#include <set>
-#include <unordered_set>
 #include <algorithm>
 #include "Location.h"
 #include "State.h"
@@ -50,8 +48,12 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start) {
             }
 
 
+            auto duplicate = std::find(toVisit.begin(), toVisit.end(), next);
 
-            if(std::find(toVisit.begin(), toVisit.end(), next)  != toVisit.end()) {
+            if(duplicate != toVisit.end()) {
+                if((*bfsMap)[next.row][next.col] > distance) {
+                    (*bfsMap)[next.row][next.col] = distance;
+                }
                 continue;
             }
 

@@ -1,5 +1,6 @@
 #include "Bot.h"
 #include "../AI/AIAnt.h"
+//#include "BFS.h"
 
 using namespace std;
 
@@ -37,6 +38,8 @@ void Bot::makeMoves()
     for (int ant = 0; ant < (int)state.myAnts.size(); ant++)
     {
         state.bug << "loop " << ant << endl;
+        //state.myAnts[ant].bfsMap = BFS::GenerateBFS(&state, &state.myAnts[ant].location);
+
         aiAnt.run(&state.myAnts[ant], &state);
 
 

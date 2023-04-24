@@ -44,16 +44,17 @@ void State::makeMove(const Location &loc, const Location &nextLoc)
     int diffY = nextLoc.row - loc.row;
 
     bug << "diffX: " << diffX << " diffY: " << diffY << endl;
+    bug << "rows: " << rows-1 << " cols: " << cols-1 << endl;
 
-    if(diffX == 1) {
+    if(diffX == 1 || (diffX == 1 - cols && diffY == 0)) {
         bug << "move " << CDIRECTIONS[1] << endl;
         makeMove(loc, 1);
     }
-    else if(diffX == -1) {
+    else if(diffX == -1 || (diffX == cols - 1 && diffY == 0)) {
         bug << "move " << CDIRECTIONS[3] << endl;
         makeMove(loc, 3);
     }
-    else if(diffY == 1) {
+    else if(diffY == 1 || (diffY == 1 - rows && diffX == 0)) {
         bug << "move " << CDIRECTIONS[2] << endl;
         makeMove(loc, 2);
     }
