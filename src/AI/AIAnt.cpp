@@ -14,7 +14,7 @@
 #include "./Soldier/A_WalkToEnnemy.h"
 
 #include "./Scout/I_NoEnnemyNearby.h"
-#include "./Scout/I_NoGazeNearby.h"
+#include "./Scout/I_NoHillsNearby.h"
 #include "./Scout/A_PlaceMeetingPoint.h"
 #include "./Scout/A_AttackGaze.h"
 #include "./Scout/A_MoveToBestDirection.h"
@@ -77,7 +77,7 @@ AIAnt::AIAnt(Ant &_ant, State &_state) : ant(_ant), state(_state)
   BT_Selector gaze = BT_Selector();
   scout.addChild(&gaze);
 
-  I_NoGazeNearby noGazeNearby = I_NoGazeNearby();
+  I_NoHillsNearby noGazeNearby = I_NoHillsNearby();
   gaze.addChild(&noGazeNearby);
 
   A_AttackGaze attackGaze = A_AttackGaze();

@@ -8,12 +8,9 @@ class I_HasEnnemyNearby : public BT_Node
 public:
   virtual NodeStatus run(Ant &ant, State &state) override
   {
-    // TODO: Implement this method.
-
     int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
     bool hasEnnemy = false;
-    // state.grid[ant.location.row][ant.location.col].ant != 0;
 
     for (int i = -sizeOfSquare; i < sizeOfSquare + 1; i++)
     {

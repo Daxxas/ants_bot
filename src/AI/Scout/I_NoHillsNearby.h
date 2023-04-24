@@ -2,37 +2,33 @@
 
 #define SQUARE_TO_CHECK 5 // Square to check (must be odd)
 
-class I_IsMoreThanEnnemy : public BT_Node
+class I_NoHillsNearby : public BT_Node
 {
 public:
   virtual NodeStatus run(Ant &ant, State &state) override
   {
     int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
-    int numberEnnemy = 0;
-    int numberAlly = 0;
+    bool hasEnnemyHill = false;
 
     for (int i = -sizeOfSquare; i < sizeOfSquare + 1; i++)
     {
       for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
       {
-        if (state.grid[ant.location.row + i][ant.location.col + j].ant > 0)
+        if (state.grid[ant.location.row + i][ant.location.col + j].isHill && state.grid[ant.location.row + i][ant.location.col + j].hillPlayer > 0)
         {
-          numberEnnemy++;
-        } else if (state.grid[ant.location.row + i][ant.location.col + j].ant == 0)
-        {
-          numberAlly++;
+          hasEnnemyHill = true;
         }
       }
     }
 
-    if (numberEnnemy < numberAlly)
+    if (hasEnnemyHill)
     {
-      return NodeStatus::SUCCESS;
+      return NodeStatus::FAILURE;
     }
     else
     {
-      return NodeStatus::FAILURE;
+      return NodeStatus::SUCCESS;
     }
   }
 };
