@@ -7,7 +7,10 @@ class I_NoHillsNearby : public BT_Node
 public:
   virtual NodeStatus run(Ant* ant, State* state) override
   {
-    int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
+      state->bug << "I_NoHillsNearby" << std::endl;
+
+
+      int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
     bool hasEnnemyHill = false;
 

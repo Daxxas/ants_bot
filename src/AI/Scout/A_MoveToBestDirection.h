@@ -7,16 +7,21 @@ class A_MoveToBestDirection : public BT_Node
 public:
     virtual NodeStatus run(Ant* ant, State* state) override
     {
-        state->bug << "Move to best direction" << std::endl;
+        state->bug << "A_MoveToBestDirection" << std::endl;
 
-        //Location target = Location(0,0);
-        //std::vector<Location> path = AStar::FindPath(state, ant.location, target);
+        Location target = Location(((ant->location.row - 3) % state->rows + state->rows) % state->rows,((ant->location.col - 3) % state->cols + state->cols) % state->cols);
+        std::vector<Location>* path = AStar::FindPath(state, &ant->location, &target);
 
-        //Location nextLocation = Location(path[0].row - ant.location.row, path[0].col - ant.location.col);
+        // log path completely
+        for (int i = 0; i < path->size(); ++i) {
+            state->bug << "path step " << i << " " << (*path)[i] << std::endl;
+        }
 
-        //state.bug << "Next location: " << nextLocation << std::endl;
+        //Location nextLocation = Location(abs((*path)[0].row- ant->location.row), abs((*path)[0].col - ant->location.col));
 
-        //state.makeMove(ant.location, state.turn % 4);
+        state->bug << "Next location: " << (*path)[0] << std::endl;
+
+        state->makeMove(ant->location, state->turn % 4);
 
         return NodeStatus::RUNNING;
     }

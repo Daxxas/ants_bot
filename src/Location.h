@@ -30,6 +30,12 @@ struct Location
     {
         return sqrt(pow(row - loc.row, 2) + pow(col - loc.col, 2));
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const Location& loc)
+    {
+        os << "(" << loc.row << "," << loc.col << ")";
+        return os;
+    }
 };
 
 #endif // LOCATION_H_
