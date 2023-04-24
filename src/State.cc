@@ -36,6 +36,35 @@ void State::reset()
                 grid[row][col].reset();
 };
 
+void State::makeMove(const Location &loc, const Location &nextLoc)
+{
+    // {'N', 'E', 'S', 'W'};
+
+    int diffX = nextLoc.col - loc.col;
+    int diffY = nextLoc.row - loc.row;
+
+    bug << "diffX: " << diffX << " diffY: " << diffY << endl;
+
+    if(diffX == 1) {
+        bug << "move " << CDIRECTIONS[1] << endl;
+        makeMove(loc, 1);
+    }
+    else if(diffX == -1) {
+        bug << "move " << CDIRECTIONS[3] << endl;
+        makeMove(loc, 3);
+    }
+    else if(diffY == 1) {
+        bug << "move " << CDIRECTIONS[2] << endl;
+        makeMove(loc, 2);
+    }
+    else {
+        bug << "move " << CDIRECTIONS[0] << endl;
+        makeMove(loc, 0);
+    }
+
+
+}
+
 // outputs move information to the engine
 void State::makeMove(const Location &loc, int direction)
 {

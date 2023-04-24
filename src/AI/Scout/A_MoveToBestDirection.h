@@ -9,7 +9,7 @@ public:
     {
         state->bug << "A_MoveToBestDirection" << std::endl;
 
-        Location target = Location(((ant->location.row - 3) % state->rows + state->rows) % state->rows,((ant->location.col - 3) % state->cols + state->cols) % state->cols);
+        Location target = Location(26,35);
         std::vector<Location>* path = AStar::FindPath(state, &ant->location, &target);
 
         // log path completely
@@ -21,7 +21,7 @@ public:
 
         state->bug << "Next location: " << (*path)[0] << std::endl;
 
-        state->makeMove(ant->location, state->turn % 4);
+        state->makeMove(ant->location, (*path)[0]);
 
         return NodeStatus::RUNNING;
     }

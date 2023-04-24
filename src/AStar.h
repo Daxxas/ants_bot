@@ -35,21 +35,13 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
     int y = target->col;
     AStarLocation current = (*map)[x][y];
 
-    state->bug << "Making path" << std::endl;
-
     bool noParent = false;
 
     while(!noParent) {
-        state->bug << "Adding to path: " << current.location << std::endl;
         path.push(current);
-        state->bug << "Current parent: " << current.parentLocation << std::endl;
         current = (*map)[current.parentLocation.row][current.parentLocation.col];
-        state->bug << "New current: " << current.location << std::endl;
         noParent = !current.hasParent;
     }
-
-    state->bug << "Path size: " << path.size() << std::endl;
-
 
     while (!path.empty()) {
         AStarLocation top = path.top();
@@ -62,7 +54,6 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
 
 std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* target) {
     state->bug << "Finding path from " << (*start) << " to " << (*target) << std::endl;
-
     // Initialize open and closed list
     std::vector<AStarLocation> openList;
     bool closedList[state->rows][state->cols];
@@ -100,8 +91,6 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 toRemoveIndex = i;
             }
         }
-        state->bug << "Current loc: " << currentLoc.location << std::endl;
-
 
         openList.erase(openList.begin() + toRemoveIndex);
         closedList[currentLoc.location.row][currentLoc.location.col] = true;
@@ -114,14 +103,9 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 if((xOffset != 0 && yOffset != 0) || (xOffset == 0 && yOffset == 0))
                     continue;
 
-                state->bug  << "Offset: " << xOffset << " " << yOffset << std::endl;
-
                 // (a % b + b) % b is a way to get a positive remainder
                 int newPosX = currentLoc.location.row + xOffset;
                 int newPosY = currentLoc.location.col + yOffset;
-
-                state->bug  << "currentLoc.location: " << currentLoc.location.row << " " << currentLoc.location.col << std::endl;
-                state->bug  << "newPos: " << newPosX << " " << newPosY << std::endl;
 
                 int neighborX = newPosX % state->rows;
                 if (neighborX < 0) {
@@ -131,17 +115,9 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 if (neighborY < 0) {
                     neighborY += state->cols;
                 }
-                state->bug  << "neighbor: " << neighborX << " " << neighborY << std::endl;
-
-
-                //int neighborX = (newPosX % state->rows + state->rows) % state->rows;
-                //int neighborY = (newPosY % state->cols + state->cols) % state->cols;
-
-                state->bug << "Checking neighbor: " << neighborX << ", " << neighborY << std::endl;
 
                 // Ants can't walk on water
                 if (state->grid[neighborX][neighborY].isWater) {
-                    state->bug << "Water at " << neighborX << " " << neighborY << std::endl;
                     continue;
                 }
 
@@ -155,7 +131,7 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                     allMap[neighborX][neighborY].parentLocation = currentLoc.location;
                     allMap[neighborX][neighborY].hasParent = true;
 
-                    state->bug << "Found path!" << std::endl;
+                    state->bug << "Path found!" << std::endl;
                     return MakePath(state, &allMap, target);
                 }
                 else {
@@ -182,7 +158,6 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                     if (loc.location.row == neighbor.location.row && loc.location.col == neighbor.location.col
                         && loc.f < neighbor.f) {
                         skipNeighbor = true;
-                        state->bug << "Skipping neighbor " << neighbor.location << " because it has a lower f in openlist" << std::endl;
                         break;
                     }
                 }
@@ -192,7 +167,6 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
 
                 if (!closedList[neighbor.location.row][neighbor.location.col]) {
                     allMap[neighborX][neighborY] = neighbor;
-                    state->bug << "Adding neighbor " << neighbor.location << " to open list" << std::endl;
                     openList.push_back(neighbor);
                 }
             }
