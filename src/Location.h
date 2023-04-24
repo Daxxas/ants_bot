@@ -1,6 +1,8 @@
 #ifndef LOCATION_H_
 #define LOCATION_H_
 
+#include <cmath>
+
 /*
     struct for representing locations in the grid.
 */
