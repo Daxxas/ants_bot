@@ -41,4 +41,4 @@ add_executable(ants_bot
         src/Square.h
         src/State.cc
         src/State.h
-        src/Timer.h src/AStar.h)
+        src/Timer.h src/AStar.h src/BFS.h)

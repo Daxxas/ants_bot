@@ -28,6 +28,7 @@ public:
 
 
 std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vector<AStarLocation>>* map, Location* target) {
+    state->bug << "Making path " << std::endl;
     std::stack<AStarLocation> path;
     auto* usablePath = new std::vector<Location>();
 
@@ -38,10 +39,12 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
     bool noParent = false;
 
     while(!noParent) {
+        //state->bug << "current " << &current << " " << current.location << std::endl;
         path.push(current);
         current = (*map)[current.parentLocation.row][current.parentLocation.col];
         noParent = !current.hasParent;
     }
+    //state->bug << "Constructing usable path " << std::endl;
 
     while (!path.empty()) {
         AStarLocation top = path.top();
@@ -53,6 +56,12 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
 
 
 std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* target) {
+    if(*start == *target) {
+        std::vector<Location>* returnVec = new std::vector<Location>();
+        returnVec->push_back(*start);
+        return returnVec;
+    }
+
     state->bug << "Finding path from " << (*start) << " to " << (*target) << std::endl;
     // Initialize open and closed list
     std::vector<AStarLocation> openList;
@@ -103,7 +112,6 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 if((xOffset != 0 && yOffset != 0) || (xOffset == 0 && yOffset == 0))
                     continue;
 
-                // (a % b + b) % b is a way to get a positive remainder
                 int newPosX = currentLoc.location.row + xOffset;
                 int newPosY = currentLoc.location.col + yOffset;
 

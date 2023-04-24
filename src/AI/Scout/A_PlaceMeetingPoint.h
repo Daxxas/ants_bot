@@ -9,6 +9,6 @@ public:
 
 
       // TODO: Implement this method.
-    return NodeStatus::FAILURE;
+    return NodeStatus::SUCCESS;
   }
 };

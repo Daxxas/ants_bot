@@ -36,6 +36,9 @@ struct Location
         return abs(loc.row - row) + abs(loc.col - col);
     }
 
+    // Overload hash
+
+
     friend std::ostream& operator<<(std::ostream& os, const Location& loc)
     {
         os << "(" << loc.row << "," << loc.col << ")";
