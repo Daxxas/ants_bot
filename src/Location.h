@@ -31,6 +31,11 @@ struct Location
         return sqrt(pow(row - loc.row, 2) + pow(col - loc.col, 2));
     }
 
+    float manhattanDistance(Location loc)
+    {
+        return abs(loc.row - row) + abs(loc.col - col);
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const Location& loc)
     {
         os << "(" << loc.row << "," << loc.col << ")";

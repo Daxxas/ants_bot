@@ -28,31 +28,31 @@ public:
 
 
 std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vector<AStarLocation>>* map, Location* target) {
-    std::stack<const AStarLocation*> path;
+    std::stack<AStarLocation> path;
     auto* usablePath = new std::vector<Location>();
 
     int x = target->row;
     int y = target->col;
-    const AStarLocation* current = &((*map)[x][y]);
+    AStarLocation current = (*map)[x][y];
 
     state->bug << "Making path" << std::endl;
 
     bool noParent = false;
 
     while(!noParent) {
-        state->bug << "Adding to path: " << current->location << std::endl;
+        state->bug << "Adding to path: " << current.location << std::endl;
         path.push(current);
-        state->bug << "Current parent: " << current->parentLocation << std::endl;
-        current = &((*map)[current->parentLocation.row][current->parentLocation.col]);
-        state->bug << "New current: " << current->location << std::endl;
-        noParent = !current->hasParent;
+        state->bug << "Current parent: " << current.parentLocation << std::endl;
+        current = (*map)[current.parentLocation.row][current.parentLocation.col];
+        state->bug << "New current: " << current.location << std::endl;
+        noParent = !current.hasParent;
     }
 
     state->bug << "Path size: " << path.size() << std::endl;
 
 
     while (!path.empty()) {
-        AStarLocation top = *path.top();
+        AStarLocation top = path.top();
         path.pop();
         usablePath->emplace_back(top.location);
     }
@@ -70,7 +70,7 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
     std::vector<std::vector<AStarLocation>> allMap;
 
     for (int x = 0; x < state->rows; x++) {
-        allMap.push_back(std::vector<AStarLocation>(state->cols));
+        allMap.emplace_back(state->cols);
         for (int y = 0; y < state->cols; y++) {
             allMap[x][y].f = 100000;
             allMap[x][y].g = 100000;
@@ -90,39 +90,58 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
     while(!openList.empty()) {
         // Find smallest f in open list
         float minf = 100000;
-        AStarLocation* currentLoc;
+        AStarLocation currentLoc;
         int toRemoveIndex = -1;
         for (int i = 0; i < openList.size(); ++i) {
-            AStarLocation* loc = &(openList[i]);
-            if (loc->f <= minf) {
-                minf = loc->f;
+            AStarLocation loc = (openList[i]);
+            if (loc.f <= minf) {
+                minf = loc.f;
                 currentLoc = loc;
                 toRemoveIndex = i;
             }
         }
-        state->bug << "Current loc: " << currentLoc->location << std::endl;
+        state->bug << "Current loc: " << currentLoc.location << std::endl;
 
 
         openList.erase(openList.begin() + toRemoveIndex);
-        closedList[currentLoc->location.row][currentLoc->location.col] = true;
+        closedList[currentLoc.location.row][currentLoc.location.col] = true;
 
         // generate neighbors of current loc
         for (int xOffset = -1; xOffset <= 1; ++xOffset) {
             for (int yOffset = -1; yOffset <= 1; ++yOffset) {
 
+                // Move only in 4 directions
                 if((xOffset != 0 && yOffset != 0) || (xOffset == 0 && yOffset == 0))
                     continue;
 
+                state->bug  << "Offset: " << xOffset << " " << yOffset << std::endl;
+
                 // (a % b + b) % b is a way to get a positive remainder
-                int newPosX = currentLoc->location.row + xOffset;
-                int newPosY = currentLoc->location.col + yOffset;
-                int neighborX = (newPosX % state->rows + state->rows) % state->rows;
-                int neighborY = (newPosY % state->rows + state->cols) % state->cols;
+                int newPosX = currentLoc.location.row + xOffset;
+                int newPosY = currentLoc.location.col + yOffset;
+
+                state->bug  << "currentLoc.location: " << currentLoc.location.row << " " << currentLoc.location.col << std::endl;
+                state->bug  << "newPos: " << newPosX << " " << newPosY << std::endl;
+
+                int neighborX = newPosX % state->rows;
+                if (neighborX < 0) {
+                    neighborX += state->rows;
+                }
+                int neighborY = newPosY % state->cols;
+                if (neighborY < 0) {
+                    neighborY += state->cols;
+                }
+                state->bug  << "neighbor: " << neighborX << " " << neighborY << std::endl;
+
+
+                //int neighborX = (newPosX % state->rows + state->rows) % state->rows;
+                //int neighborY = (newPosY % state->cols + state->cols) % state->cols;
 
                 state->bug << "Checking neighbor: " << neighborX << ", " << neighborY << std::endl;
 
                 // Ants can't walk on water
                 if (state->grid[neighborX][neighborY].isWater) {
+                    state->bug << "Water at " << neighborX << " " << neighborY << std::endl;
                     continue;
                 }
 
@@ -133,25 +152,23 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
 
                 // Found destination
                 if (neighborX == target->row && neighborY == target->col) {
-                    allMap[neighborX][neighborY].parentLocation = currentLoc->location;
+                    allMap[neighborX][neighborY].parentLocation = currentLoc.location;
                     allMap[neighborX][neighborY].hasParent = true;
 
                     state->bug << "Found path!" << std::endl;
                     return MakePath(state, &allMap, target);
                 }
                 else {
-                    neighborG = currentLoc->g + state->distance(currentLoc->location, neighborLocation);
-                    neighborH = state->distance(neighborLocation, *target);
+                    neighborG = currentLoc.g + currentLoc.location.manhattanDistance(neighborLocation);
+                    neighborH = neighborLocation.manhattanDistance(*target);
                     neighborF = neighborG + neighborH;
                 }
 
                 // Create neighbor
                 AStarLocation neighbor;
-                neighbor.location = Location(neighborX, neighborY);
-                neighbor.parentLocation = currentLoc->location;
-
+                neighbor.location = neighborLocation;
+                neighbor.parentLocation = currentLoc.location;
                 neighbor.hasParent = true;
-
                 neighbor.f = neighborF;
                 neighbor.g = neighborG;
                 neighbor.h = neighborH;
