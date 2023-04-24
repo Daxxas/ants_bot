@@ -14,7 +14,7 @@
 #include "./Soldier/A_WalkToEnnemy.h"
 
 #include "./Scout/I_NoEnnemyNearby.h"
-#include "./Scout/I_NoGazeNearby.h"
+#include "./Scout/I_NoHillsNearby.h"
 #include "./Scout/A_PlaceMeetingPoint.h"
 #include "./Scout/A_AttackGaze.h"
 #include "./Scout/A_MoveToBestDirection.h"
@@ -78,8 +78,8 @@ AIAnt::AIAnt()
   BT_Selector* gaze = new BT_Selector();
   scout->addChild(gaze);
 
-  I_NoGazeNearby* noGazeNearby = new I_NoGazeNearby();
-  gaze->addChild(noGazeNearby);
+    I_NoHillsNearby* noHillsNearby = new I_NoHillsNearby();
+  gaze->addChild(noHillsNearby);
 
   A_AttackGaze* attackGaze = new A_AttackGaze();
   gaze->addChild(attackGaze);

@@ -39,3 +39,7 @@ cmake-build-debug
 /build
 
 MyBot
+
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake

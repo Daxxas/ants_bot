@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Ant.h"
-#include "State.h"
+#include "../State.h"
 
 enum NodeStatus : short
 {

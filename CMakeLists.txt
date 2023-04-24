@@ -17,7 +17,7 @@ add_executable(ants_bot
         src/AI/Scout/A_MoveToBestDirection.h
         src/AI/Scout/A_PlaceMeetingPoint.h
         src/AI/Scout/I_NoEnnemyNearby.h
-        src/AI/Scout/I_NoGazeNearby.h
+        src/AI/Scout/I_NoHillsNearby.h
         src/AI/Soldier/A_DeleteMeetingPoint.h
         src/AI/Soldier/A_WalkToEnnemy.h
         src/AI/Soldier/A_WalkToMeetingPoint.h
