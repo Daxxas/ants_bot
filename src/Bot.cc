@@ -32,12 +32,12 @@ void Bot::makeMoves()
     state.bug << "turn " << state.turn << ":" << endl;
     state.bug << state << endl;
     AIAnt aiAnt;
-    state.bug << "init aiant" << endl;
+    state.bug << "Ants number: " << (int)state.myAnts.size() << endl;
 
     // picks out moves for each ant
     for (int ant = 0; ant < (int)state.myAnts.size(); ant++)
     {
-        state.bug << "loop " << ant << endl;
+        state.bug << "Ant n°" << ant << " ===============================" << endl;
         //state.myAnts[ant].bfsMap = BFS::GenerateBFS(&state, &state.myAnts[ant].location);
 
         aiAnt.run(&state.myAnts[ant], &state);

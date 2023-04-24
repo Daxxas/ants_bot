@@ -60,6 +60,7 @@ struct State
     void makeMove(const Location &loc, int direction);
     void makeMove(const Location &loc, const Location &nextLoc);
 
+    std::pair<int, int> correctPos(int row, int col);
     double distance(const Location &loc1, const Location &loc2);
     Location getLocation(const Location &startLoc, int direction);
 

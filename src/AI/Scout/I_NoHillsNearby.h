@@ -18,7 +18,11 @@ public:
     {
       for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
       {
-        if (state->grid[ant->location.row + i][ant->location.col + j].isHill && state->grid[ant->location.row + i][ant->location.col + j].hillPlayer > 0)
+          int newPosX = ant->location.row + i;
+          int newPosY = ant->location.col + j;
+          auto pos = state->correctPos(newPosX, newPosY);
+
+        if (state->grid[pos.first][pos.second].isHill && state->grid[pos.first][pos.second].hillPlayer > 0)
         {
           hasEnnemyHill = true;
         }

@@ -56,7 +56,7 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
 
 
 std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* target) {
-    if(*start == *target) {
+    if(*start == *target || state->grid[target->row][target->col].isWater) {
         std::vector<Location>* returnVec = new std::vector<Location>();
         returnVec->push_back(*start);
         return returnVec;
@@ -115,29 +115,22 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 int newPosX = currentLoc.location.row + xOffset;
                 int newPosY = currentLoc.location.col + yOffset;
 
-                int neighborX = newPosX % state->rows;
-                if (neighborX < 0) {
-                    neighborX += state->rows;
-                }
-                int neighborY = newPosY % state->cols;
-                if (neighborY < 0) {
-                    neighborY += state->cols;
-                }
+                auto neighborPos = state->correctPos(newPosX, newPosY);
 
                 // Ants can't walk on water
-                if (state->grid[neighborX][neighborY].isWater) {
+                if (state->grid[neighborPos.first][neighborPos.second].isWater) {
                     continue;
                 }
 
-                Location neighborLocation = Location(neighborX, neighborY);
+                Location neighborLocation = Location(neighborPos.first, neighborPos.second);
                 double neighborG = 0;
                 double neighborH = 0;
                 double neighborF = 0;
 
                 // Found destination
-                if (neighborX == target->row && neighborY == target->col) {
-                    allMap[neighborX][neighborY].parentLocation = currentLoc.location;
-                    allMap[neighborX][neighborY].hasParent = true;
+                if (neighborPos.first == target->row && neighborPos.second == target->col) {
+                    allMap[neighborPos.first][neighborPos.second].parentLocation = currentLoc.location;
+                    allMap[neighborPos.first][neighborPos.second].hasParent = true;
 
                     state->bug << "Path found!" << std::endl;
                     return MakePath(state, &allMap, target);
@@ -174,7 +167,7 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                     continue;
 
                 if (!closedList[neighbor.location.row][neighbor.location.col]) {
-                    allMap[neighborX][neighborY] = neighbor;
+                    allMap[neighborPos.first][neighborPos.second] = neighbor;
                     openList.push_back(neighbor);
                 }
             }

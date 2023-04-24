@@ -294,3 +294,18 @@ istream &operator>>(istream &is, State &state)
 
     return is;
 };
+
+std::pair<int, int> State::correctPos(int row, int col) {
+    pair<int, int> pos;
+
+    pos.first = row % rows;
+    if (pos.first < 0) {
+        pos.first += rows;
+    }
+    pos.second = col % cols;
+    if (pos.second < 0) {
+        pos.second += cols;
+    }
+
+    return pos;
+}
