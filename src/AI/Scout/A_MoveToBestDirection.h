@@ -13,32 +13,27 @@ public:
         Location target = Location(-1, -1);
 
         // target closest food if I'm the best ant
-
-        Location bestAnt = Location(-1, -1);
-        Location bestFood = Location(-1, -1);
-        float bestAntFoodDistance = 1000000;
-
         for (auto food : state->food)
         {
+            state->bug << "looping food " << food << std::endl;
+
             for(auto myAnt : state->myAnts)
             {
-                if (bestAntFoodDistance > myAnt.location.manhattanDistance(food, state->rows, state->cols))
-                {
-                    bestAnt = myAnt.location;
-                    bestFood = food;
-                    bestAntFoodDistance = myAnt.location.manhattanDistance(food, state->rows, state->cols);
+                state->bug << "looping ant " << myAnt.location << std::endl;
+
+                // if an ant is closer to the food, I'm not the one for it
+                if (myAnt.location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(food, state->rows, state->cols)) {
+                    target = Location(-1,-1);
+                    break;
                 }
+
+                // if above is not called once, we are the best ant for this food
+                state->bug << "best ant for food " << food << " should be " << ant->location << std::endl;
+                target = food;
+
+                // no better ant found other than me
             }
         }
-
-        if(bestAnt != Location(-1, -1) && bestAnt == ant->location)
-        {
-            state->bug << "ant " << ant->location << " best for food " << bestFood << std::endl;
-
-            target = bestFood;
-
-        }
-
 
         // Ant isn't the best for any food, so should explore/cover map
         if(target == Location(-1, -1)) {

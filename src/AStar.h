@@ -112,9 +112,6 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
             }
         }
 
-        state->bug << "exploring " << &currentLoc << " pos " << currentLoc.location << std::endl;
-
-
         openList.erase(openList.begin() + toRemoveIndex);
         closedList[currentLoc.location.row][currentLoc.location.col] = true;
 
