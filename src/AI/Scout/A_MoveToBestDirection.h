@@ -10,23 +10,66 @@ public:
     {
         state->bug << "A_MoveToBestDirection" << std::endl;
 
-        auto bfs = BFS::GenerateBFS(state, &ant->location);
+        Location target = Location(-1, -1);
 
-        Location target = Location(0, 0);
+        // target closest food if I'm the best ant
 
-        Location bestFood = Location(0, 0);
-        int bestFoodDistance = 1000000;
+        Location bestAnt = Location(-1, -1);
+        Location bestFood = Location(-1, -1);
+        int bestAntDistance = 1000000;
+
         for (auto food : state->food)
         {
-            if (bestFoodDistance > (*bfs)[food.row][food.col] && (*bfs)[food.row][food.col] >= 0)
-            {
-                bestFood = food;
-                bestFoodDistance = (*bfs)[food.row][food.col];
+            for(auto myAnt : state->myAnts) {
+
+                if (bestAntDistance > myAnt.location.distance(food, state->rows, state->cols))
+                {
+                    bestAnt = myAnt.location;
+                    bestFood = food;
+                    bestAntDistance = myAnt.location.distance(food, state->rows, state->cols);
+                }
             }
         }
-        target = bestFood;
 
-        state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
+        if(bestAnt != Location(-1, -1) && bestAnt == ant->location)
+        {
+            state->bug << "ant " << ant->location << " best for food " << bestFood << std::endl;
+
+            target = bestFood;
+
+        }
+
+
+        // Ant isn't the best for any food, so should explore/cover map
+        if(target == Location(-1, -1)) {
+            state->bug << "ant " << ant->location << " not best for any food" << std::endl;
+
+            // find closest unexplored square
+            Location closestUnexplored = Location(-1, -1);
+            int closestUnexploredDistance = 1000000;
+
+            for (int row = 0; row < state->rows; row++)
+            {
+                for (int col = 0; col < state->cols; col++)
+                {
+                    if (state->grid[row][col].isVisible)
+                    {
+                        continue;
+                    }
+
+                    if (closestUnexploredDistance > ant->location.distance(Location(row, col), state->rows, state->cols))
+                    {
+                        closestUnexplored = Location(row, col);
+                        closestUnexploredDistance = ant->location.distance(Location(row, col), state->rows, state->cols);
+                    }
+                }
+            }
+
+            target = closestUnexplored;
+
+        }
+
+        //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
 
         std::vector<Location> *path = AStar::FindPath(state, &ant->location, &target);
 

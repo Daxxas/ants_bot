@@ -12,10 +12,10 @@
 
 class BFS {
 public:
-    static std::vector<std::vector<int>>* GenerateBFS(State* state, Location* start);
+    static std::vector<std::vector<int>>* GenerateBFS(State* state, Location* start, int maxDistance);
 };
 
-std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start) {
+std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start, int maxDistance) {
     state->bug << "Generating BFS" << std::endl;
 
     std::vector<Location> toVisit;
@@ -29,7 +29,7 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start) {
         toVisit.erase(toVisit.begin());
 
         // no need to go further than the number  of turns
-        if((*bfsMap)[current.row][current.col] > state->turns)
+        if((*bfsMap)[current.row][current.col] > maxDistance)
             continue;
 
         for (int i = 0; i < 4; i++) {

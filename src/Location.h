@@ -26,9 +26,19 @@ struct Location
         return row == other.row && col == other.col;
     };
 
-    float distance(Location loc)
+    bool operator!=(const Location &other) const
     {
-        return sqrt(pow(row - loc.row, 2) + pow(col - loc.col, 2));
+        return !(*this == other);
+    };
+
+    float distance(Location loc, int rows, int cols)
+    {
+        int d1 = abs(row - loc.row),
+                d2 = abs(col - loc.col),
+                dr = std::min(d1, rows - d1),
+                dc = std::min(d2, cols - d2);
+
+        return sqrt(dr * dr + dc * dc);
     }
 
     float manhattanDistance(Location loc, int rows, int cols)

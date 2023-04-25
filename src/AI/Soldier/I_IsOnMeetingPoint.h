@@ -9,7 +9,7 @@ public:
   {
     state->bug << "I_IsOnMeetingPoint" << std::endl;
 
-    if (ant->location.distance(ant->meetingPoint) <= MEETING_POINT_DISTANCE)
+    if (ant->location.distance(ant->meetingPoint, state->rows, state->cols) <= MEETING_POINT_DISTANCE)
     {
       return NodeStatus::SUCCESS;
     }
