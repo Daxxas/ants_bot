@@ -43,6 +43,7 @@ public:
 
         // Ant isn't the best for any food, so should explore/cover map
         if(target == Location(-1, -1)) {
+            target = Location(0,0); // Default location in case something goes wrong
             state->bug << "ant " << ant->location << " not best for any food" << std::endl;
 
             // find closest unexplored square
@@ -58,14 +59,15 @@ public:
                         continue;
                     }
 
-                    if (closestUnexploredDistance > ant->location.distance(Location(row, col), state->rows, state->cols))
+                    float distance = ant->location.manhattanDistance(Location(row, col), state->rows, state->cols);
+
+                    if (closestUnexploredDistance > distance)
                     {
                         closestUnexplored = Location(row, col);
-                        closestUnexploredDistance = ant->location.distance(Location(row, col), state->rows, state->cols);
+                        closestUnexploredDistance = distance;
                     }
                 }
             }
-
 
             state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
 
