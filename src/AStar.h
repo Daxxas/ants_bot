@@ -136,6 +136,18 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
                     continue;
                 }
 
+                // Avoid moving on player hill
+                if (state->grid[neighborPos.first][neighborPos.second].hillPlayer == 0)
+                {
+                    continue;
+                }
+
+                // Avoid moving on other ants
+                if (state->grid[neighborPos.first][neighborPos.second].ant == 0)
+                {
+                    continue;
+                }
+
                 Location neighborLocation = Location(neighborPos.first, neighborPos.second);
                 double neighborG = 0;
                 double neighborH = 0;
