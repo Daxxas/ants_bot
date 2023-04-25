@@ -15,8 +15,6 @@ public:
         // target closest food if I'm the best ant
         for (auto food : state->food)
         {
-            state->bug << "looping food " << food << std::endl;
-
             if(target != Location(-1, -1)) {
                 // if new food is closer than current target, check if need to change target
                 if(ant->location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(target, state->rows, state->cols)) {
@@ -29,24 +27,18 @@ public:
 
             for(auto myAnt : state->myAnts)
             {
-                state->bug << "looping ant " << myAnt.location << std::endl;
-
                 // if an ant is closer to the food, I'm not the one for it
                 if (myAnt.location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(food, state->rows, state->cols)) {
                     target = Location(-1,-1);
-                    state->bug << "ant " << myAnt.location << " is better than " << ant->location << " for food " << food << std::endl;
                     break;
                 }
 
                 // if above is not called once, we are the best ant for this food
-                state->bug << "best ant for food " << food << " should be " << ant->location << std::endl;
                 target = food;
-
-                // no better ant found other than me
             }
         }
 
-        state->bug << "final target for ant " << ant->location << " is " << target << std::endl;
+        state->bug << "final food target for ant " << ant->location << " is " << target << std::endl;
 
 
         // Ant isn't the best for any food, so should explore/cover map
@@ -55,13 +47,13 @@ public:
 
             // find closest unexplored square
             Location closestUnexplored = Location(-1, -1);
-            int closestUnexploredDistance = 1000000;
+            float closestUnexploredDistance = 1000000;
 
             for (int row = 0; row < state->rows; row++)
             {
                 for (int col = 0; col < state->cols; col++)
                 {
-                    if (state->grid[row][col].isVisible)
+                    if (state->grid[row][col].isVisible || state->grid[row][col].isWater)
                     {
                         continue;
                     }
@@ -74,16 +66,37 @@ public:
                 }
             }
 
-            target = closestUnexplored;
 
+            state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
+
+            target = closestUnexplored;
         }
 
         //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
 
         std::vector<Location> *path = AStar::FindPath(state, &ant->location, &target);
 
-        state->bug << "Next location: " << (*path)[0] << std::endl;
-        state->makeMove(ant->location, (*path)[0]);
+        state->bug << "Path size " << path->size() << std::endl;
+
+        Location nextLoc;
+        // No path found to destination
+        if(path->size() <= 0) {
+            // Go to opposite direction
+            int diffX = ant->location.row - target.row;
+            int diffY = ant->location.col - target.col;
+
+            nextLoc = ant->location + Location(diffX/abs(diffX), diffY/abs(diffY));
+            std::pair<int,int> correctedLoc = state->correctPos(nextLoc.row, nextLoc.col);
+            nextLoc = Location(correctedLoc.first, correctedLoc.second);
+
+            state->bug << "No path found to destination, changing destination to " << nextLoc << std::endl;
+        }
+        else {
+            nextLoc = (*path)[0];
+        }
+
+        state->bug << "Next location: " << nextLoc << std::endl;
+        state->makeMove(ant->location, nextLoc);
 
         return NodeStatus::RUNNING;
     }
