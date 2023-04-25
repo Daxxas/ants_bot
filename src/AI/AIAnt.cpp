@@ -85,8 +85,10 @@ AIAnt::AIAnt()
 
 AIAnt::~AIAnt()
 {
-    // TODO : Faire le delete
-    // delete pointeur;
+    for (BT_Node *pointeur : root.children)
+    {
+        delete pointeur;
+    }
 }
 
 void AIAnt::run(Ant *ant, State *state)
