@@ -30,10 +30,6 @@ public:
 
         std::vector<Location> *path = AStar::FindPath(state, &ant->location, &target);
 
-        // log path completely
-        //        for (int i = 0; i < path->size(); ++i) {
-        //            state->bug << "path step " << i << " " << (*path)[i] << std::endl;
-        //        }
         state->bug << "Next location: " << (*path)[0] << std::endl;
         state->makeMove(ant->location, (*path)[0]);
 

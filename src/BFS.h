@@ -24,13 +24,13 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start) {
     toVisit.push_back(*start);
     (*bfsMap)[start->row][start->col] = 0;
 
-    int distance = 0;
-
     while(!toVisit.empty()) {
         Location current = toVisit.front();
         toVisit.erase(toVisit.begin());
 
-        (*bfsMap)[current.row][current.col] = distance;
+        // no need to go further than the number  of turns
+        if((*bfsMap)[current.row][current.col] > state->turns)
+            continue;
 
         for (int i = 0; i < 4; i++) {
             Location next = current;
@@ -47,13 +47,9 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start) {
                 next.col += state->cols;
             }
 
-
             auto duplicate = std::find(toVisit.begin(), toVisit.end(), next);
 
             if(duplicate != toVisit.end()) {
-                if((*bfsMap)[next.row][next.col] > distance) {
-                    (*bfsMap)[next.row][next.col] = distance;
-                }
                 continue;
             }
 
@@ -65,15 +61,12 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start) {
                 continue;
             }
 
+            (*bfsMap)[next.row][next.col] = (*bfsMap)[current.row][current.col] + 1;
             toVisit.push_back(next);
         }
-        distance++;
-
-        // no need to go further than the number  of turns
-        if(distance > state->turns)
-            break;
     }
 
+    state->bug << "Generated BFS" << std::endl;
     return bfsMap;
 }
 
