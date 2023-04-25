@@ -16,17 +16,17 @@ public:
 
         Location bestAnt = Location(-1, -1);
         Location bestFood = Location(-1, -1);
-        int bestAntDistance = 1000000;
+        float bestAntFoodDistance = 1000000;
 
         for (auto food : state->food)
         {
-            for(auto myAnt : state->myAnts) {
-
-                if (bestAntDistance > myAnt.location.distance(food, state->rows, state->cols))
+            for(auto myAnt : state->myAnts)
+            {
+                if (bestAntFoodDistance > myAnt.location.manhattanDistance(food, state->rows, state->cols))
                 {
                     bestAnt = myAnt.location;
                     bestFood = food;
-                    bestAntDistance = myAnt.location.distance(food, state->rows, state->cols);
+                    bestAntFoodDistance = myAnt.location.manhattanDistance(food, state->rows, state->cols);
                 }
             }
         }

@@ -112,6 +112,9 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
             }
         }
 
+        state->bug << "exploring " << &currentLoc << " pos " << currentLoc.location << std::endl;
+
+
         openList.erase(openList.begin() + toRemoveIndex);
         closedList[currentLoc.location.row][currentLoc.location.col] = true;
 
@@ -147,7 +150,6 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
                     allMap[neighborPos.first][neighborPos.second].parentLocation = currentLoc.location;
                     allMap[neighborPos.first][neighborPos.second].hasParent = true;
 
-                    state->bug << "Path found!" << std::endl;
                     return MakePath(state, &allMap, target);
                 }
                 else
@@ -184,6 +186,7 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
 
                 if (!closedList[neighbor.location.row][neighbor.location.col])
                 {
+                    closedList[neighbor.location.row][neighbor.location.col] = true;
                     allMap[neighborPos.first][neighborPos.second] = neighbor;
                     openList.push_back(neighbor);
                 }

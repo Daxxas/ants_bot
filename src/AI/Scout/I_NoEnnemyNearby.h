@@ -17,7 +17,6 @@ public:
         {
             for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
             {
-                state->bug << "Checking " << ant->location.row + i << " " << ant->location.col + j << std::endl;
                 int newPosX = ant->location.row + i;
                 int newPosY = ant->location.col + j;
                 auto pos = state->correctPos(newPosX, newPosY);
