@@ -18,7 +18,10 @@ public:
     {
       for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
       {
-        if (state->grid[ant->location.row + i][ant->location.col + j].ant > 0)
+        if (
+            state->grid[ant->location.row + i][ant->location.col + j].ant > 0 ||
+            (state->grid[ant->location.row + i][ant->location.col + j].hillPlayer > 0 &&
+             state->grid[ant->location.row + i][ant->location.col + j].isHill))
         {
           hasEnnemy = true;
         }

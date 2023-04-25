@@ -16,7 +16,7 @@
 #include "./Scout/I_NoEnnemyNearby.h"
 #include "./Scout/I_NoHillsNearby.h"
 #include "./Scout/A_PlaceMeetingPoint.h"
-#include "./Scout/A_AttackGaze.h"
+#include "./Scout/A_AttackHill.h"
 #include "./Scout/A_MoveToBestDirection.h"
 
 AIAnt::AIAnt()
@@ -80,8 +80,8 @@ AIAnt::AIAnt()
     I_NoHillsNearby *noHillsNearby = new I_NoHillsNearby();
     gaze->addChild(noHillsNearby);
 
-    A_AttackGaze *attackGaze = new A_AttackGaze();
-    gaze->addChild(attackGaze);
+    A_AttackHill *attackHill = new A_AttackHill();
+    gaze->addChild(attackHill);
 
     // Scout
     A_MoveToBestDirection *moveToBestDirection = new A_MoveToBestDirection();

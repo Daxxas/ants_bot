@@ -13,7 +13,7 @@ include_directories(src/AI/Soldier)
 include_directories(src/BT)
 
 add_executable(ants_bot
-        src/AI/Scout/A_AttackGaze.h
+        src/AI/Scout/A_AttackHill.h
         src/AI/Scout/A_MoveToBestDirection.h
         src/AI/Scout/A_PlaceMeetingPoint.h
         src/AI/Scout/I_NoEnnemyNearby.h

@@ -13,11 +13,13 @@ struct Ant
   bool hasMeetingPoint = false;
   Location meetingPoint;
 
-  std::vector<std::vector<int>>* bfsMap;
+  std::vector<std::vector<int>> *bfsMap;
 
   Location location;
 
   Ant(Location loc);
+
+  void setMeetingPoint(int row, int col);
 };
 
 std::ostream &operator<<(std::ostream &os, const Ant &state);

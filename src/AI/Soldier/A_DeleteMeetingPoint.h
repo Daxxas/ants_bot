@@ -7,7 +7,8 @@ public:
   {
     state->bug << "A_DeleteMeetingPoint" << std::endl;
 
-    // TODO: Implement this method.
-    return NodeStatus::RUNNING;
+    ant->hasMeetingPoint = false;
+
+    return NodeStatus::SUCCESS;
   }
 };
