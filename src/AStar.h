@@ -2,10 +2,12 @@
 #define ANTS_BOT_ASTAR_H
 
 #include "State.h"
-#include<map>
+#include <map>
 #include <algorithm>
+#include <cstring>
 
-struct AStarLocation {
+struct AStarLocation
+{
 public:
     Location location;
     Location parentLocation;
@@ -14,23 +16,24 @@ public:
     float h;
     float f;
 
-    AStarLocation() {
-
+    AStarLocation()
+    {
     }
 };
 
-class AStar {
+class AStar
+{
 public:
-    static std::vector<Location>* FindPath(State* state, Location* start, Location* target);
+    static std::vector<Location> *FindPath(State *state, Location *start, Location *target);
 
-    static std::vector<Location>* MakePath(State* state, const std::vector<std::vector<AStarLocation>>* map, Location* target);
+    static std::vector<Location> *MakePath(State *state, const std::vector<std::vector<AStarLocation>> *map, Location *target);
 };
 
-
-std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vector<AStarLocation>>* map, Location* target) {
+std::vector<Location> *AStar::MakePath(State *state, const std::vector<std::vector<AStarLocation>> *map, Location *target)
+{
     state->bug << "Making path " << std::endl;
     std::stack<AStarLocation> path;
-    auto* usablePath = new std::vector<Location>();
+    auto *usablePath = new std::vector<Location>();
 
     int x = target->row;
     int y = target->col;
@@ -38,15 +41,17 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
 
     bool noParent = false;
 
-    while(!noParent) {
-        //state->bug << "current " << &current << " " << current.location << std::endl;
+    while (!noParent)
+    {
+        // state->bug << "current " << &current << " " << current.location << std::endl;
         path.push(current);
         current = (*map)[current.parentLocation.row][current.parentLocation.col];
         noParent = !current.hasParent;
     }
-    //state->bug << "Constructing usable path " << std::endl;
+    // state->bug << "Constructing usable path " << std::endl;
 
-    while (!path.empty()) {
+    while (!path.empty())
+    {
         AStarLocation top = path.top();
         path.pop();
         usablePath->emplace_back(top.location);
@@ -54,10 +59,11 @@ std::vector<Location>* AStar::MakePath(State* state, const std::vector<std::vect
     return usablePath;
 }
 
-
-std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* target) {
-    if(*start == *target || state->grid[target->row][target->col].isWater) {
-        std::vector<Location>* returnVec = new std::vector<Location>();
+std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *target)
+{
+    if (*start == *target || state->grid[target->row][target->col].isWater)
+    {
+        std::vector<Location> *returnVec = new std::vector<Location>();
         returnVec->push_back(*start);
         return returnVec;
     }
@@ -69,14 +75,16 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
     memset(closedList, false, sizeof(closedList));
     std::vector<std::vector<AStarLocation>> allMap;
 
-    for (int x = 0; x < state->rows; x++) {
+    for (int x = 0; x < state->rows; x++)
+    {
         allMap.emplace_back(state->cols);
-        for (int y = 0; y < state->cols; y++) {
+        for (int y = 0; y < state->cols; y++)
+        {
             allMap[x][y].f = 100000;
             allMap[x][y].g = 100000;
             allMap[x][y].h = 100000;
             allMap[x][y].hasParent = false;
-            allMap[x][y].location = Location(x,y);
+            allMap[x][y].location = Location(x, y);
         }
     }
 
@@ -87,14 +95,17 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
 
     openList.push_back(allMap[start->row][start->col]);
 
-    while(!openList.empty()) {
+    while (!openList.empty())
+    {
         // Find smallest f in open list
         float minf = 100000;
         AStarLocation currentLoc;
         int toRemoveIndex = -1;
-        for (int i = 0; i < openList.size(); ++i) {
+        for (int i = 0; i < openList.size(); ++i)
+        {
             AStarLocation loc = (openList[i]);
-            if (loc.f <= minf) {
+            if (loc.f <= minf)
+            {
                 minf = loc.f;
                 currentLoc = loc;
                 toRemoveIndex = i;
@@ -105,11 +116,13 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
         closedList[currentLoc.location.row][currentLoc.location.col] = true;
 
         // generate neighbors of current loc
-        for (int xOffset = -1; xOffset <= 1; ++xOffset) {
-            for (int yOffset = -1; yOffset <= 1; ++yOffset) {
+        for (int xOffset = -1; xOffset <= 1; ++xOffset)
+        {
+            for (int yOffset = -1; yOffset <= 1; ++yOffset)
+            {
 
                 // Move only in 4 directions
-                if((xOffset != 0 && yOffset != 0) || (xOffset == 0 && yOffset == 0))
+                if ((xOffset != 0 && yOffset != 0) || (xOffset == 0 && yOffset == 0))
                     continue;
 
                 int newPosX = currentLoc.location.row + xOffset;
@@ -118,7 +131,8 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 auto neighborPos = state->correctPos(newPosX, newPosY);
 
                 // Ants can't walk on water
-                if (state->grid[neighborPos.first][neighborPos.second].isWater) {
+                if (state->grid[neighborPos.first][neighborPos.second].isWater)
+                {
                     continue;
                 }
 
@@ -128,14 +142,16 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 double neighborF = 0;
 
                 // Found destination
-                if (neighborPos.first == target->row && neighborPos.second == target->col) {
+                if (neighborPos.first == target->row && neighborPos.second == target->col)
+                {
                     allMap[neighborPos.first][neighborPos.second].parentLocation = currentLoc.location;
                     allMap[neighborPos.first][neighborPos.second].hasParent = true;
 
                     state->bug << "Path found!" << std::endl;
                     return MakePath(state, &allMap, target);
                 }
-                else {
+                else
+                {
                     neighborG = currentLoc.g + currentLoc.location.manhattanDistance(neighborLocation, state->rows, state->cols);
                     neighborH = neighborLocation.manhattanDistance(*target, state->rows, state->cols);
                     neighborF = neighborG + neighborH;
@@ -150,14 +166,14 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 neighbor.g = neighborG;
                 neighbor.h = neighborH;
 
-
                 // Add neighbor if matches conditions
                 bool skipNeighbor = false;
 
-                for (auto it = openList.begin(); it != openList.end(); it = next(it)) {
+                for (auto it = openList.begin(); it != openList.end(); it = next(it))
+                {
                     AStarLocation loc = *it;
-                    if (loc.location.row == neighbor.location.row && loc.location.col == neighbor.location.col
-                        && loc.f < neighbor.f) {
+                    if (loc.location.row == neighbor.location.row && loc.location.col == neighbor.location.col && loc.f < neighbor.f)
+                    {
                         skipNeighbor = true;
                         break;
                     }
@@ -166,7 +182,8 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
                 if (skipNeighbor)
                     continue;
 
-                if (!closedList[neighbor.location.row][neighbor.location.col]) {
+                if (!closedList[neighbor.location.row][neighbor.location.col])
+                {
                     allMap[neighborPos.first][neighborPos.second] = neighbor;
                     openList.push_back(neighbor);
                 }
@@ -178,5 +195,4 @@ std::vector<Location>* AStar::FindPath(State* state, Location* start, Location* 
     return new std::vector<Location>();
 }
 
-
-#endif //ANTS_BOT_ASTAR_H
+#endif // ANTS_BOT_ASTAR_H
