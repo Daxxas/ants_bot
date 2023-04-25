@@ -1,8 +1,6 @@
 #include "../../BT/BT_Node.h"
 #include <cmath>
 
-#define SQUARE_TO_CHECK 5 // Square to check (must be odd)
-
 class I_HasEnnemyNearby : public BT_Node
 {
 public:

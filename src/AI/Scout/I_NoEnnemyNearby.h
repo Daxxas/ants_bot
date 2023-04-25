@@ -1,7 +1,5 @@
 #include "../../BT/BT_Node.h"
 
-#define SQUARE_TO_CHECK 5 // Square to check (must be odd)
-
 class I_NoEnnemyNearby : public BT_Node
 {
 public:

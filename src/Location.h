@@ -39,9 +39,9 @@ struct Location
     float distance(Location loc, int rows, int cols)
     {
         int d1 = abs(row - loc.row),
-                d2 = abs(col - loc.col),
-                dr = std::min(d1, rows - d1),
-                dc = std::min(d2, cols - d2);
+            d2 = abs(col - loc.col),
+            dr = std::min(d1, rows - d1),
+            dc = std::min(d2, cols - d2);
 
         return sqrt(dr * dr + dc * dc);
     }
@@ -49,16 +49,15 @@ struct Location
     float manhattanDistance(Location loc, int rows, int cols)
     {
         int d1 = abs(row - loc.row),
-                d2 = abs(col - loc.col),
-                dr = std::min(d1, rows - d1),
-                dc = std::min(d2, cols - d2);
+            d2 = abs(col - loc.col),
+            dr = std::min(d1, rows - d1),
+            dc = std::min(d2, cols - d2);
         return dr + dc;
     }
 
     // Overload hash
 
-
-    friend std::ostream& operator<<(std::ostream& os, const Location& loc)
+    friend std::ostream &operator<<(std::ostream &os, const Location &loc)
     {
         os << "(" << loc.row << "," << loc.col << ")";
         return os;

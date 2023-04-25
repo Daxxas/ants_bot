@@ -1,5 +1,8 @@
 #include <iostream>
 
+#define SQUARE_TO_CHECK 7 // Square to check (must be odd)
+#define SEND_X_ANT 3
+
 #include "AIAnt.h"
 #include "../BT/BT_Selector.h"
 #include "../BT/BT_Sequence.h"

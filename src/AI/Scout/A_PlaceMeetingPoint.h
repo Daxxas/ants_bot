@@ -2,9 +2,6 @@
 
 #include <algorithm>
 
-#define SQUARE_TO_CHECK 5 // Square to check (must be odd)
-#define SEND_X_ANT 3
-
 struct CloseAnd
 {
   Ant *ant;
@@ -59,7 +56,7 @@ public:
     // Place meeting point for close ants
     for (int i = 0; i < state->myAnts.size(); i++)
     {
-      if (state->distance(state->myAnts[i].location, Location(bestPos.first, bestPos.second)))
+      if (state->distance(state->myAnts[i].location, Location(bestPos.first, bestPos.second)) < 40)
       {
         CloseAnd closeAnt;
         closeAnt.ant = &state->myAnts[i];
@@ -68,11 +65,14 @@ public:
       }
     }
 
+    state->bug << "Close ants: " << closeAnts.size() << std::endl;
+
     std::sort(closeAnts.begin(), closeAnts.end(), [](CloseAnd a, CloseAnd b)
               { return a.distance < b.distance; });
 
     for (int i = 0; i < std::min((int)closeAnts.size(), SEND_X_ANT); i++)
     {
+      state->bug << "Sending ant " << &ant << " to " << bestPos.first << " " << bestPos.second << std::endl;
       closeAnts[i].ant->setMeetingPoint(bestPos.first, bestPos.second);
     }
 
