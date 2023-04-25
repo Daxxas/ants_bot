@@ -5,12 +5,11 @@
 class I_IsMoreThanEnnemy : public BT_Node
 {
 public:
-  virtual NodeStatus run(Ant* ant, State* state) override
+  virtual NodeStatus run(Ant *ant, State *state) override
   {
-      state->bug << "I_IsMoreThanEnnemy" << std::endl;
+    state->bug << "I_IsMoreThanEnnemy" << std::endl;
 
-
-      int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
+    int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
     int numberEnnemy = 0;
     int numberAlly = 0;
@@ -22,7 +21,8 @@ public:
         if (state->grid[ant->location.row + i][ant->location.col + j].ant > 0)
         {
           numberEnnemy++;
-        } else if (state->grid[ant->location.row + i][ant->location.col + j].ant == 0)
+        }
+        else if (state->grid[ant->location.row + i][ant->location.col + j].ant == 0)
         {
           numberAlly++;
         }

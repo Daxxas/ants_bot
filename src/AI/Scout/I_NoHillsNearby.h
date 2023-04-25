@@ -5,12 +5,11 @@
 class I_NoHillsNearby : public BT_Node
 {
 public:
-  virtual NodeStatus run(Ant* ant, State* state) override
+  virtual NodeStatus run(Ant *ant, State *state) override
   {
-      state->bug << "I_NoHillsNearby" << std::endl;
+    state->bug << "I_NoHillsNearby" << std::endl;
 
-
-      int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
+    int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
     bool hasEnnemyHill = false;
 
@@ -18,9 +17,9 @@ public:
     {
       for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
       {
-          int newPosX = ant->location.row + i;
-          int newPosY = ant->location.col + j;
-          auto pos = state->correctPos(newPosX, newPosY);
+        int newPosX = ant->location.row + i;
+        int newPosY = ant->location.col + j;
+        auto pos = state->correctPos(newPosX, newPosY);
 
         if (state->grid[pos.first][pos.second].isHill && state->grid[pos.first][pos.second].hillPlayer > 0)
         {

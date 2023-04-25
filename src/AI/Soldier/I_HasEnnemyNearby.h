@@ -6,12 +6,11 @@
 class I_HasEnnemyNearby : public BT_Node
 {
 public:
-  virtual NodeStatus run(Ant* ant, State* state) override
+  virtual NodeStatus run(Ant *ant, State *state) override
   {
-      state->bug << "I_HasEnnemyNearby" << std::endl;
+    state->bug << "I_HasEnnemyNearby" << std::endl;
 
-
-      int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
+    int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
     bool hasEnnemy = false;
 

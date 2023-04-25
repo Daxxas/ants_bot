@@ -5,10 +5,9 @@
 class I_NoEnnemyNearby : public BT_Node
 {
 public:
-    virtual NodeStatus run(Ant* ant, State* state) override
+    virtual NodeStatus run(Ant *ant, State *state) override
     {
         state->bug << "I_NoEnnemyNearby" << std::endl;
-
 
         int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
 
