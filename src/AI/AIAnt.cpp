@@ -57,16 +57,6 @@ AIAnt::AIAnt()
     BT_Sequence *scout = new BT_Sequence();
     root.addChild(scout);
 
-    // Scout/Ennemy
-    BT_Selector *ennemy = new BT_Selector();
-    scout->addChild(ennemy);
-
-    I_NoEnnemyNearby *noEnnemyNearby = new I_NoEnnemyNearby();
-    ennemy->addChild(noEnnemyNearby);
-
-    A_PlaceMeetingPoint *placeMeetingPoint = new A_PlaceMeetingPoint();
-    ennemy->addChild(placeMeetingPoint);
-
     // Scout/Gaze
     BT_Selector *gaze = new BT_Selector();
     scout->addChild(gaze);
@@ -76,6 +66,16 @@ AIAnt::AIAnt()
 
     A_AttackHill *attackHill = new A_AttackHill();
     gaze->addChild(attackHill);
+
+    // Scout/Ennemy
+    BT_Selector *ennemy = new BT_Selector();
+    scout->addChild(ennemy);
+
+    I_NoEnnemyNearby *noEnnemyNearby = new I_NoEnnemyNearby();
+    ennemy->addChild(noEnnemyNearby);
+
+    A_PlaceMeetingPoint *placeMeetingPoint = new A_PlaceMeetingPoint();
+    ennemy->addChild(placeMeetingPoint);
 
     // Scout
     A_MoveToBestDirection *moveToBestDirection = new A_MoveToBestDirection();

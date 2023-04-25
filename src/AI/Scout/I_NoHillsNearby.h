@@ -19,8 +19,11 @@ public:
         int newPosY = ant->location.col + j;
         auto pos = state->correctPos(newPosX, newPosY);
 
+        state->bug << pos.first << "," << pos.second << state->grid[pos.first][pos.second].isHill << " " << state->grid[pos.first][pos.second].hillPlayer << std::endl;
+
         if (state->grid[pos.first][pos.second].isHill && state->grid[pos.first][pos.second].hillPlayer > 0)
         {
+          state->bug << "Found ennemy hill" << std::endl;
           hasEnnemyHill = true;
         }
       }
