@@ -8,10 +8,8 @@
 #include "./Soldier/I_HasMeetingPoint.h"
 #include "./Soldier/I_IsOnMeetingPoint.h"
 #include "./Soldier/I_HasEnnemyNearby.h"
-#include "./Soldier/I_IsMoreThanEnnemy.h"
 #include "./Soldier/A_WalkToMeetingPoint.h"
 #include "./Soldier/A_DeleteMeetingPoint.h"
-#include "./Soldier/A_WalkToEnnemy.h"
 
 #include "./Scout/I_NoEnnemyNearby.h"
 #include "./Scout/I_NoHillsNearby.h"
@@ -51,13 +49,6 @@ AIAnt::AIAnt()
 
     A_DeleteMeetingPoint *deleteMeetingPoint = new A_DeleteMeetingPoint();
     keepStatus->addChild(deleteMeetingPoint);
-
-    // Soldier/Attack
-    I_IsMoreThanEnnemy *isMoreThanEnnemy = new I_IsMoreThanEnnemy();
-    attack->addChild(isMoreThanEnnemy);
-
-    A_WalkToEnnemy *walkToEnnemy = new A_WalkToEnnemy();
-    attack->addChild(walkToEnnemy);
 
     // Scout
     BT_Sequence *scout = new BT_Sequence();

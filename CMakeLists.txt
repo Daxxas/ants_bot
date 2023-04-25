@@ -19,11 +19,9 @@ add_executable(ants_bot
         src/AI/Scout/I_NoEnnemyNearby.h
         src/AI/Scout/I_NoHillsNearby.h
         src/AI/Soldier/A_DeleteMeetingPoint.h
-        src/AI/Soldier/A_WalkToEnnemy.h
         src/AI/Soldier/A_WalkToMeetingPoint.h
         src/AI/Soldier/I_HasEnnemyNearby.h
         src/AI/Soldier/I_HasMeetingPoint.h
-        src/AI/Soldier/I_IsMoreThanEnnemy.h
         src/AI/Soldier/I_IsOnMeetingPoint.h
         src/AI/AIAnt.cpp
         src/AI/AIAnt.h
