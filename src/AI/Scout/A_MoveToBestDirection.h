@@ -17,6 +17,16 @@ public:
         {
             state->bug << "looping food " << food << std::endl;
 
+            if(target != Location(-1, -1)) {
+                // if new food is closer than current target, check if need to change target
+                if(ant->location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(target, state->rows, state->cols)) {
+                    state->bug << "food " << food << " is closer than " << target << std::endl;
+                }
+                else {
+                    continue;
+                }
+            }
+
             for(auto myAnt : state->myAnts)
             {
                 state->bug << "looping ant " << myAnt.location << std::endl;
@@ -24,6 +34,7 @@ public:
                 // if an ant is closer to the food, I'm not the one for it
                 if (myAnt.location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(food, state->rows, state->cols)) {
                     target = Location(-1,-1);
+                    state->bug << "ant " << myAnt.location << " is better than " << ant->location << " for food " << food << std::endl;
                     break;
                 }
 
@@ -34,6 +45,9 @@ public:
                 // no better ant found other than me
             }
         }
+
+        state->bug << "final target for ant " << ant->location << " is " << target << std::endl;
+
 
         // Ant isn't the best for any food, so should explore/cover map
         if(target == Location(-1, -1)) {
