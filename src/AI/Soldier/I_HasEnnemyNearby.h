@@ -18,12 +18,10 @@ public:
     {
       for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
       {
-        auto pos = state->correctPos(ant->location.row + i, ant->location.col + j);
-
         if (
-            state->grid[pos.first][pos.second].ant > 0 ||
-            (state->grid[pos.first][pos.second].hillPlayer > 0 &&
-             state->grid[pos.first][pos.second].isHill))
+            state->grid[ant->location.row + i][ant->location.col + j].ant > 0 ||
+            (state->grid[ant->location.row + i][ant->location.col + j].hillPlayer > 0 &&
+             state->grid[ant->location.row + i][ant->location.col + j].isHill))
         {
           hasEnnemy = true;
         }
