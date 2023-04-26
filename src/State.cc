@@ -44,26 +44,28 @@ void State::makeMove(const Location &loc, const Location &nextLoc)
     int diffY = nextLoc.row - loc.row;
 
     bug << "diffX: " << diffX << " diffY: " << diffY << endl;
-    bug << "rows: " << rows-1 << " cols: " << cols-1 << endl;
+    bug << "rows: " << rows - 1 << " cols: " << cols - 1 << endl;
 
-    if(diffX == 1 || (diffX == 1 - cols && diffY == 0)) {
+    if (diffX == 1 || (diffX == 1 - cols && diffY == 0))
+    {
         bug << "move " << CDIRECTIONS[1] << endl;
         makeMove(loc, 1);
     }
-    else if(diffX == -1 || (diffX == cols - 1 && diffY == 0)) {
+    else if (diffX == -1 || (diffX == cols - 1 && diffY == 0))
+    {
         bug << "move " << CDIRECTIONS[3] << endl;
         makeMove(loc, 3);
     }
-    else if(diffY == 1 || (diffY == 1 - rows && diffX == 0)) {
+    else if (diffY == 1 || (diffY == 1 - rows && diffX == 0))
+    {
         bug << "move " << CDIRECTIONS[2] << endl;
         makeMove(loc, 2);
     }
-    else {
+    else
+    {
         bug << "move " << CDIRECTIONS[0] << endl;
         makeMove(loc, 0);
     }
-
-
 }
 
 // outputs move information to the engine
@@ -295,17 +297,46 @@ istream &operator>>(istream &is, State &state)
     return is;
 };
 
-std::pair<int, int> State::correctPos(int row, int col) {
+std::pair<int, int> State::correctPos(int row, int col)
+{
     pair<int, int> pos;
 
     pos.first = row % rows;
-    if (pos.first < 0) {
+    if (pos.first < 0)
+    {
         pos.first += rows;
     }
     pos.second = col % cols;
-    if (pos.second < 0) {
+    if (pos.second < 0)
+    {
         pos.second += cols;
     }
 
     return pos;
+}
+
+void State::saveHillsDestination()
+{
+    hillsDestination.clear();
+    bug << "Saving hills destination" << endl;
+
+    for (int i = 0; i < myAnts.size(); i++)
+    {
+        if (myAnts[i].hasHillDestination)
+            hillsDestination.insert(make_pair(myAnts[i].location.toString(), myAnts[i].hillDestination));
+    }
+}
+void State::applyHillsDestination()
+{
+    for (int i = 0; i < myAnts.size(); i++)
+    {
+
+        bug << "Apply hills destination" << endl;
+
+        if (hillsDestination.find(myAnts[i].location.toString()) != hillsDestination.end())
+        {
+            myAnts[i].hillDestination = hillsDestination[myAnts[i].location.toString()];
+            myAnts[i].hasHillDestination = true;
+        }
+    }
 }

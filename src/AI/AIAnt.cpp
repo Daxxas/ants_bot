@@ -9,18 +9,30 @@
 #include "../BT/BT_Sequence.h"
 
 // Include all leef
+#include "./Soldier/I_HasHillDestination.h"
 #include "./Soldier/I_NoEnnemyNearby.h"
 #include "./Soldier/I_NoHillsNearby.h"
 #include "./Soldier/A_AttackEnnemy.h"
 #include "./Soldier/A_AttackHill.h"
+#include "./Soldier/A_WalkToHillDestination.h"
 
 #include "./Scout/A_MoveToBestDirection.h"
 
 AIAnt::AIAnt()
 {
     // Soldier
-    BT_Sequence *soldier = new BT_Sequence();
+    BT_Selector *soldier = new BT_Selector();
     root.addChild(soldier);
+
+    // Soldier/Hill Destination
+    BT_Sequence *hillDestination = new BT_Sequence();
+    soldier->addChild(hillDestination);
+
+    I_HasHillDestination *hasHillDestination = new I_HasHillDestination();
+    hillDestination->addChild(hasHillDestination);
+
+    A_WalkToHillDestination *walkToHillDestination = new A_WalkToHillDestination();
+    hillDestination->addChild(walkToHillDestination);
 
     // Soldier/Gaze
     BT_Selector *gaze = new BT_Selector();

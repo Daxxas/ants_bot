@@ -7,6 +7,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <map>
 #include <queue>
 #include <stack>
 #include <stdint.h>
@@ -44,6 +45,7 @@ struct State
     std::vector<std::vector<Square>> grid;
     std::vector<Location> enemyAnts, myHills, enemyHills, food;
     std::vector<Ant> myAnts;
+    std::map<std::string, Location> hillsDestination;
 
     Timer timer;
     Bug bug;
@@ -63,6 +65,9 @@ struct State
     std::pair<int, int> correctPos(int row, int col);
     double distance(const Location &loc1, const Location &loc2);
     Location getLocation(const Location &startLoc, int direction);
+
+    void saveHillsDestination();
+    void applyHillsDestination();
 
     void updateVisionInformation();
 };

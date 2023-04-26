@@ -24,6 +24,8 @@ public:
       }
     }
 
+    ant->setHillDestination(hillLocation.row, hillLocation.col);
+
     auto path = AStar::FindPath(state, &ant->location, &hillLocation);
 
     Location nextLoc;

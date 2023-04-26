@@ -10,8 +10,8 @@
 
 struct Ant
 {
-  bool hasMeetingPoint = false;
-  Location meetingPoint;
+  bool hasHillDestination = false;
+  Location hillDestination;
 
   std::vector<std::vector<int>> *bfsMap;
 
@@ -19,7 +19,7 @@ struct Ant
 
   Ant(Location loc);
 
-  void setMeetingPoint(int row, int col);
+  void setHillDestination(int row, int col);
 };
 
 std::ostream &operator<<(std::ostream &os, const Ant &state);

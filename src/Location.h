@@ -2,6 +2,7 @@
 #define LOCATION_H_
 
 #include <cmath>
+#include <string>
 
 /*
     struct for representing locations in the grid.
@@ -56,11 +57,15 @@ struct Location
     }
 
     // Overload hash
-
     friend std::ostream &operator<<(std::ostream &os, const Location &loc)
     {
         os << "(" << loc.row << "," << loc.col << ")";
         return os;
+    }
+
+    std::string toString()
+    {
+        return "(" + std::to_string(row) + "," + std::to_string(col) + ")";
     }
 };
 
