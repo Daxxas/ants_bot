@@ -1,6 +1,7 @@
 #include "../../BT/BT_Node.h"
 
 #include <algorithm>
+#include "../../AStar.h"
 
 struct CloseAnd
 {
@@ -8,7 +9,7 @@ struct CloseAnd
   float distance;
 };
 
-class A_PlaceMeetingPoint : public BT_Node
+class A_AttackEnnemy : public BT_Node
 {
 public:
   virtual NodeStatus run(Ant *ant, State *state) override
@@ -49,33 +50,23 @@ public:
       }
     }
 
-    ant->setMeetingPoint(bestPos.first, bestPos.second);
+    Location loc = Location(bestPos.first, bestPos.second);
 
-    std::vector<CloseAnd> closeAnts;
+    auto path = AStar::FindPath(state, &ant->location, &loc);
 
-    // Place meeting point for close ants
-    for (int i = 0; i < state->myAnts.size(); i++)
+    Location nextLoc;
+    // No path found to destination, stay in place
+    if (path->size() <= 0)
     {
-      if (state->distance(state->myAnts[i].location, Location(bestPos.first, bestPos.second)) < 40)
-      {
-        CloseAnd closeAnt;
-        closeAnt.ant = &state->myAnts[i];
-        closeAnt.distance = state->distance(state->myAnts[i].location, Location(bestPos.first, bestPos.second));
-        closeAnts.push_back(closeAnt);
-      }
+      nextLoc = ant->location;
+    }
+    else
+    {
+      nextLoc = (*path)[0];
     }
 
-    state->bug << "Close ants: " << closeAnts.size() << std::endl;
+    state->makeMove(ant->location, nextLoc);
 
-    std::sort(closeAnts.begin(), closeAnts.end(), [](CloseAnd a, CloseAnd b)
-              { return a.distance < b.distance; });
-
-    for (int i = 0; i < std::min((int)closeAnts.size(), SEND_X_ANT); i++)
-    {
-      state->bug << "Sending ant " << &ant << " to " << bestPos.first << " " << bestPos.second << std::endl;
-      closeAnts[i].ant->setMeetingPoint(bestPos.first, bestPos.second);
-    }
-
-    return NodeStatus::SUCCESS;
+    return NodeStatus::RUNNING;
   }
 };

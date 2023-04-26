@@ -11,7 +11,7 @@
 // Include all leef
 #include "./Soldier/I_NoEnnemyNearby.h"
 #include "./Soldier/I_NoHillsNearby.h"
-#include "./Soldier/A_PlaceMeetingPoint.h"
+#include "./Soldier/A_AttackEnnemy.h"
 #include "./Soldier/A_AttackHill.h"
 
 #include "./Scout/A_MoveToBestDirection.h"
@@ -39,8 +39,8 @@ AIAnt::AIAnt()
     I_NoEnnemyNearby *noEnnemyNearby = new I_NoEnnemyNearby();
     ennemy->addChild(noEnnemyNearby);
 
-    A_PlaceMeetingPoint *placeMeetingPoint = new A_PlaceMeetingPoint();
-    ennemy->addChild(placeMeetingPoint);
+    A_AttackEnnemy *attackEnnemy = new A_AttackEnnemy();
+    ennemy->addChild(attackEnnemy);
 
     // Scout
     BT_Sequence *scout = new BT_Sequence();
