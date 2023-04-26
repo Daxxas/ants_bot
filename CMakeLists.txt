@@ -16,10 +16,10 @@ add_executable(ants_bot
         src/AI/Scout/A_MoveToBestDirection.h
         src/AI/Soldier/A_AttackHill.h
         src/AI/Soldier/A_AttackEnnemy.h
-        src/AI/Soldier/A_WalkToMeetingPoint.h
+        src/AI/Soldier/A_WalkToHillDestination.h
         src/AI/Soldier/I_NoEnnemyNearby.h
         src/AI/Soldier/I_NoHillsNearby.h
-        src/AI/Soldier/I_HasMeetingPoint.h
+        src/AI/Soldier/I_HasHillDestination.h
         src/AI/AIAnt.cpp
         src/AI/AIAnt.h
         src/BT/BT_CompositeNode.h
