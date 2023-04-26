@@ -54,8 +54,6 @@ public:
                     closeAnts++;
                     centroid.row += myAnt.location.row;
                     centroid.col += myAnt.location.col;
-                    state->correctPos(&centroid);
-
                 }
             }
 
@@ -66,7 +64,7 @@ public:
 
             if(closeAnts > 5) {
                 // Go away from centroid
-                Location awayFromCentroid = Location(ant->location.row - centroid.row, ant->location.col - centroid.col);
+                Location awayFromCentroid = ant->location + centroid;
                 state->correctPos(&awayFromCentroid);
                 target = awayFromCentroid;
 
