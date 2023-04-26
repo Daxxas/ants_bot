@@ -46,32 +46,60 @@ public:
             target = Location(0,0); // Default location in case something goes wrong
             state->bug << "ant " << ant->location << " not best for any food" << std::endl;
 
-            // find closest unexplored square
-            Location closestUnexplored = Location(-1, -1);
-            float closestUnexploredDistance = 1000000;
+            int closeAnts = 0;
+            Location centroid = Location(0,0);
 
-            for (int row = 0; row < state->rows; row++)
-            {
-                for (int col = 0; col < state->cols; col++)
-                {
-                    if (state->grid[row][col].isVisible || state->grid[row][col].isWater)
-                    {
-                        continue;
-                    }
+            for(auto myAnt : state->myAnts){
+                if(ant->location.distance(myAnt.location, state->rows, state->cols) < state->viewradius) {
+                    closeAnts++;
+                    centroid.row += myAnt.location.row;
+                    centroid.col += myAnt.location.col;
+                    state->correctPos(&centroid);
 
-                    float distance = ant->location.manhattanDistance(Location(row, col), state->rows, state->cols);
-
-                    if (closestUnexploredDistance > distance)
-                    {
-                        closestUnexplored = Location(row, col);
-                        closestUnexploredDistance = distance;
-                    }
                 }
             }
 
-            state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
+            centroid.row /= closeAnts;
+            centroid.col /= closeAnts;
+            state->correctPos(&centroid);
 
-            target = closestUnexplored;
+
+            if(closeAnts > 5) {
+                // Go away from centroid
+                Location awayFromCentroid = Location(ant->location.row - centroid.row, ant->location.col - centroid.col);
+                state->correctPos(&awayFromCentroid);
+                target = awayFromCentroid;
+
+                state->bug << "ant " << ant->location << " going away from centroid " << centroid << " to " << target << " close to " << closeAnts << " ants | view radius " << state->viewradius << std::endl;
+            }
+            else {
+                // find closest unexplored square
+                Location closestUnexplored = Location(-1, -1);
+                float closestUnexploredDistance = 1000000;
+
+                for (int row = 0; row < state->rows; row++)
+                {
+                    for (int col = 0; col < state->cols; col++)
+                    {
+                        if (state->grid[row][col].isVisible || state->grid[row][col].isWater)
+                        {
+                            continue;
+                        }
+
+                        float distance = ant->location.manhattanDistance(Location(row, col), state->rows, state->cols);
+
+                        if (closestUnexploredDistance > distance)
+                        {
+                            closestUnexplored = Location(row, col);
+                            closestUnexploredDistance = distance;
+                        }
+                    }
+                }
+
+                state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
+
+                target = closestUnexplored;
+            }
         }
 
         //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;

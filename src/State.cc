@@ -46,22 +46,22 @@ void State::makeMove(const Location &loc, const Location &nextLoc)
     bug << "diffX: " << diffX << " diffY: " << diffY << endl;
     bug << "rows: " << rows - 1 << " cols: " << cols - 1 << endl;
 
-    if (diffX == 1 || (diffX == 1 - cols && diffY == 0))
+    if (diffX == 1 || (diffX == 1 - cols && diffY == 0))        // EAST -> COL+1
     {
         bug << "move " << CDIRECTIONS[1] << endl;
         makeMove(loc, 1);
     }
-    else if (diffX == -1 || (diffX == cols - 1 && diffY == 0))
+    else if (diffX == -1 || (diffX == cols - 1 && diffY == 0))  // WEST -> COL-1
     {
         bug << "move " << CDIRECTIONS[3] << endl;
         makeMove(loc, 3);
     }
-    else if (diffY == 1 || (diffY == 1 - rows && diffX == 0))
+    else if (diffY == 1 || (diffY == 1 - rows && diffX == 0))   // SOUTH -> ROW+1
     {
         bug << "move " << CDIRECTIONS[2] << endl;
         makeMove(loc, 2);
     }
-    else
+    else                                                        // NORTH -> ROW-1
     {
         bug << "move " << CDIRECTIONS[0] << endl;
         makeMove(loc, 0);
@@ -313,6 +313,20 @@ std::pair<int, int> State::correctPos(int row, int col)
     }
 
     return pos;
+}
+
+void State::correctPos(Location* location)
+{
+    location->row = location->row % rows;
+    if (location->row < 0)
+    {
+        location->row += rows;
+    }
+    location->col = location->col % cols;
+    if (location->col < 0)
+    {
+        location->col += cols;
+    }
 }
 
 void State::saveHillsDestination()

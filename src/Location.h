@@ -37,6 +37,11 @@ struct Location
         return Location(row + other.row, col + other.col);
     }
 
+    Location operator-(const Location &other) const
+    {
+        return Location(row - other.row, col - other.col);
+    }
+
     float distance(Location loc, int rows, int cols)
     {
         int d1 = abs(row - loc.row),
