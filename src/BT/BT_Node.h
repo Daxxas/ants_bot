@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "../Ant.h"
 #include "../State.h"
 
@@ -13,5 +14,5 @@ enum NodeStatus : short
 class BT_Node
 { // This class represents each node in the behaviour tree.
 public:
-	virtual NodeStatus run(Ant* ant, State* state) = 0;
+	virtual NodeStatus run(Ant *ant, State *state) = 0;
 };

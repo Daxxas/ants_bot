@@ -5,12 +5,15 @@
 class BT_Sequence : public BT_CompositeNode
 {
 public:
-    NodeStatus run(Ant* ant, State* state) override
+    NodeStatus run(Ant *ant, State *state) override
     {
-        for (int i = 0; i < children.size(); ++i) {
-
-            BT_Node* child = children[i];
+        state->bug << "Sequence: " << this << std::endl;
+        for (int i = 0; i < children.size(); ++i)
+        {
+            BT_Node *child = children[i];
             NodeStatus status = child->run(ant, state);
+            state->bug << "Sequence: " << child << " " << status << std::endl;
+
             // The generic BT_Sequence implementation.
             if (status == NodeStatus::FAILURE) // If one child fails, then enter operation run() fails.  Success only results if all children succeed.
                 return NodeStatus::FAILURE;

@@ -13,16 +13,11 @@ include_directories(src/AI/Soldier)
 include_directories(src/BT)
 
 add_executable(ants_bot
-        src/AI/Scout/A_AttackHill.h
+        src/AI/Soldier/A_AttackHill.h
         src/AI/Scout/A_MoveToBestDirection.h
-        src/AI/Scout/A_PlaceMeetingPoint.h
-        src/AI/Scout/I_NoEnnemyNearby.h
-        src/AI/Scout/I_NoHillsNearby.h
-        src/AI/Soldier/A_DeleteMeetingPoint.h
-        src/AI/Soldier/A_WalkToMeetingPoint.h
-        src/AI/Soldier/I_HasEnnemyNearby.h
-        src/AI/Soldier/I_HasMeetingPoint.h
-        src/AI/Soldier/I_IsOnMeetingPoint.h
+        src/AI/Soldier/A_PlaceMeetingPoint.h
+        src/AI/Soldier/I_NoEnnemyNearby.h
+        src/AI/Soldier/I_NoHillsNearby.h
         src/AI/AIAnt.cpp
         src/AI/AIAnt.h
         src/BT/BT_CompositeNode.h

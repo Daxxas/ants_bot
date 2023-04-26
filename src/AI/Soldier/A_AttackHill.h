@@ -14,7 +14,7 @@ public:
       if (state->distance(ant->location, state->enemyHills[i]) < ANT_TO_HILL_DISTANCE)
       {
         ant->setMeetingPoint(state->enemyHills[i].row, state->enemyHills[i].col);
-        state->bug << "Sending ant " << &ant << " to " << state->enemyHills[i].row << " " << state->enemyHills[i].col << std::endl;
+        state->bug << "Sending ant " << ant << " to " << state->enemyHills[i].row << " " << state->enemyHills[i].col << std::endl;
 
         break;
       }

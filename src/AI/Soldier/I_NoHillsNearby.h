@@ -14,6 +14,7 @@ public:
       if (state->distance(ant->location, state->enemyHills[i]) < ANT_TO_HILL_DISTANCE)
       {
         hasEnnemyHill = true;
+        state->bug << "Ant " << ant << " has an ennemy hill nearby" << std::endl;
         break;
       }
     }

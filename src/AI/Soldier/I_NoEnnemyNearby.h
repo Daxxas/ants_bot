@@ -22,16 +22,21 @@ public:
                 if (state->grid[pos.first][pos.second].ant > 0)
                 {
                     hasEnnemy = true;
+                    state->bug << "Ant " << ant << " has an ennemy nearby" << std::endl;
                 }
             }
         }
 
         if (hasEnnemy)
         {
+            state->bug << "FAILURE No Ennemy Nearby, should stop " << std::endl;
+
             return NodeStatus::FAILURE;
         }
         else
         {
+            state->bug << "SUCCESS No Ennemy Nearby, should continue " << std::endl;
+
             return NodeStatus::SUCCESS;
         }
     }
