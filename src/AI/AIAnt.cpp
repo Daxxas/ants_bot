@@ -2,6 +2,7 @@
 
 #define SQUARE_TO_CHECK 7 // Square to check (must be odd)
 #define SEND_X_ANT 3
+#define ANT_TO_HILL_DISTANCE 10
 
 #include "AIAnt.h"
 #include "../BT/BT_Selector.h"

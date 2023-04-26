@@ -7,25 +7,14 @@ public:
   {
     state->bug << "I_NoHillsNearby" << std::endl;
 
-    int sizeOfSquare = (int)floor(SQUARE_TO_CHECK / 2);
-
     bool hasEnnemyHill = false;
 
-    for (int i = -sizeOfSquare; i < sizeOfSquare + 1; i++)
+    for (int i = 0; i < state->enemyHills.size(); i++)
     {
-      for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
+      if (state->distance(ant->location, state->enemyHills[i]) < ANT_TO_HILL_DISTANCE)
       {
-        int newPosX = ant->location.row + i;
-        int newPosY = ant->location.col + j;
-        auto pos = state->correctPos(newPosX, newPosY);
-
-        state->bug << pos.first << "," << pos.second << state->grid[pos.first][pos.second].isHill << " " << state->grid[pos.first][pos.second].hillPlayer << std::endl;
-
-        if (state->grid[pos.first][pos.second].isHill && state->grid[pos.first][pos.second].hillPlayer > 0)
-        {
-          state->bug << "Found ennemy hill" << std::endl;
-          hasEnnemyHill = true;
-        }
+        hasEnnemyHill = true;
+        break;
       }
     }
 
