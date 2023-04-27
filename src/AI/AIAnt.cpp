@@ -35,7 +35,7 @@ AIAnt::AIAnt()
     hillDestination->addChild(walkToHillDestination);
 
     // Soldier/Gaze
-    BT_Selector *gaze = new BT_Selector();
+    BT_Sequence *gaze = new BT_Sequence();
     soldier->addChild(gaze);
 
     I_NoHillsNearby *noHillsNearby = new I_NoHillsNearby();
@@ -45,7 +45,7 @@ AIAnt::AIAnt()
     gaze->addChild(attackHill);
 
     // Soldier/Ennemy
-    BT_Selector *ennemy = new BT_Selector();
+    BT_Sequence *ennemy = new BT_Sequence();
     soldier->addChild(ennemy);
 
     I_NoEnnemyNearby *noEnnemyNearby = new I_NoEnnemyNearby();
@@ -55,7 +55,7 @@ AIAnt::AIAnt()
     ennemy->addChild(attackEnnemy);
 
     // Scout
-    BT_Sequence *scout = new BT_Sequence();
+    BT_Selector *scout = new BT_Selector();
     root.addChild(scout);
 
     // Scout

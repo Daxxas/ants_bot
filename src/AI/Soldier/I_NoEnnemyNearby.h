@@ -29,15 +29,15 @@ public:
 
         if (hasEnnemy)
         {
-            state->bug << "FAILURE No Ennemy Nearby, should stop " << std::endl;
+            state->bug << "SUCCESS Ennemy Nearby, should attack " << std::endl;
 
-            return NodeStatus::FAILURE;
+            return NodeStatus::SUCCESS;
         }
         else
         {
-            state->bug << "SUCCESS No Ennemy Nearby, should continue " << std::endl;
+            state->bug << "FAILURE No Ennemy Nearby, should continue " << std::endl;
 
-            return NodeStatus::SUCCESS;
+            return NodeStatus::FAILURE;
         }
     }
 };

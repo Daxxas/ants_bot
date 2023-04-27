@@ -21,11 +21,13 @@ public:
 
     if (hasEnnemyHill)
     {
-      return NodeStatus::FAILURE;
+      state->bug << "SUCCESS Ant " << ant << " has an ennemy hill nearby" << std::endl;
+      return NodeStatus::SUCCESS;
     }
     else
     {
-      return NodeStatus::SUCCESS;
+      state->bug << "FAILURE Ant " << ant << " has no ennemy hill nearby" << std::endl;
+      return NodeStatus::FAILURE;
     }
   }
 };
