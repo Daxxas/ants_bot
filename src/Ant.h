@@ -13,8 +13,6 @@ struct Ant
   bool hasHillDestination = false;
   Location hillDestination;
 
-  std::vector<std::vector<int>> *bfsMap;
-
   Location location;
 
   Ant(Location loc);

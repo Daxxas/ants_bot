@@ -1,4 +1,5 @@
 #include "State.h"
+#include "BFS.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ State::~State()
 void State::setup()
 {
     grid = vector<vector<Square>>(rows, vector<Square>(cols, Square()));
+    exploreGrid  = vector<vector<int>>(rows, vector<int>(cols, 0));
 };
 
 // resets all non-water squares to land and clears the bots ant vector
@@ -42,6 +44,10 @@ void State::makeMove(const Location &loc, const Location &nextLoc)
 
     int diffX = nextLoc.col - loc.col;
     int diffY = nextLoc.row - loc.row;
+
+    if(diffX == 0 && diffY == 0) {
+        return;
+    }
 
     bug << "diffX: " << diffX << " diffY: " << diffY << endl;
     bug << "rows: " << rows - 1 << " cols: " << cols - 1 << endl;
@@ -353,4 +359,36 @@ void State::applyHillsDestination()
             myAnts[i].hasHillDestination = true;
         }
     }
+}
+
+bool IsMyAnt(Square square) {
+    return square.ant == 0;
+}
+
+void State::updateExploreGrid()
+{
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            if(!grid[row][col].isVisible) {
+                exploreGrid[row][col]++;
+            }
+            else {
+                exploreGrid[row][col] = 0;
+            }
+        }
+    }
+}
+
+void State::displayExploreGrid()
+{
+    bug << std::endl;
+
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            bug << exploreGrid[row][col] << " ";
+        }
+        bug << std::endl;
+    }
+    bug << std::endl;
+
 }

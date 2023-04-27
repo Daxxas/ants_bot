@@ -43,6 +43,7 @@ struct State
     int64_t seed;
 
     std::vector<std::vector<Square>> grid;
+    std::vector<std::vector<int>> exploreGrid;
     std::vector<Location> enemyAnts, myHills, enemyHills, food;
     std::vector<Ant> myAnts;
     std::map<std::string, Location> hillsDestination;
@@ -70,6 +71,8 @@ struct State
 
     void saveHillsDestination();
     void applyHillsDestination();
+    void updateExploreGrid();
+    void displayExploreGrid();
 
     void updateVisionInformation();
 };

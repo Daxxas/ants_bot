@@ -1,7 +1,6 @@
 #include "../../BT/BT_Node.h"
 #include "../AStar.h"
 #include "../Bug.h"
-#include "BFS.h"
 
 class A_MoveToBestDirection : public BT_Node
 {
@@ -45,59 +44,20 @@ public:
         if(target == Location(-1, -1)) {
             target = Location(0,0); // Default location in case something goes wrong
             state->bug << "ant " << ant->location << " not best for any food" << std::endl;
-
-            int closeAnts = 0;
-            Location centroid = Location(0,0);
-
-            for(auto myAnt : state->myAnts){
-                if(ant->location.distance(myAnt.location, state->rows, state->cols) < state->viewradius) {
-                    closeAnts++;
-                    centroid.row += myAnt.location.row;
-                    centroid.col += myAnt.location.col;
-                }
-            }
-
-            centroid.row /= closeAnts;
-            centroid.col /= closeAnts;
-            state->correctPos(&centroid);
-
-
-            if(closeAnts > 5) {
-                // Go away from centroid
-                Location awayFromCentroid = ant->location + centroid;
-                state->correctPos(&awayFromCentroid);
-                target = awayFromCentroid;
-
-                state->bug << "ant " << ant->location << " going away from centroid " << centroid << " to " << target << " close to " << closeAnts << " ants | view radius " << state->viewradius << std::endl;
-            }
-            else {
+            {
                 // find closest unexplored square
-                Location closestUnexplored = Location(-1, -1);
-                float closestUnexploredDistance = 1000000;
-
-                for (int row = 0; row < state->rows; row++)
-                {
+                for (int row = 0; row < state->rows; row++) {
                     for (int col = 0; col < state->cols; col++)
                     {
-                        if (state->grid[row][col].isVisible || state->grid[row][col].isWater)
-                        {
-                            continue;
-                        }
 
-                        float distance = ant->location.manhattanDistance(Location(row, col), state->rows, state->cols);
-
-                        if (closestUnexploredDistance > distance)
-                        {
-                            closestUnexplored = Location(row, col);
-                            closestUnexploredDistance = distance;
-                        }
                     }
                 }
-
-                state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
-
-                target = closestUnexplored;
             }
+        }
+
+        // Don't move is no correct target
+        if(target == Location(-1,-1)) {
+            target = Location(0,0);
         }
 
         //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
