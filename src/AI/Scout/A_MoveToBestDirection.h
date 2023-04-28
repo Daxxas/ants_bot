@@ -49,6 +49,11 @@ public:
             }
         }
 
+        // if no hill to target
+        if(target == Location(-1,-1)) {
+            target = Location(0,0);
+        }
+
         //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
         state->bug << "Timer before Astar: " << state->timer.getTime() << " ms" << std::endl;
 
