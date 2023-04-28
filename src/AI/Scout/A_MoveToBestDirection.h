@@ -35,13 +35,18 @@ public:
 
             state->bug << "closestUnexplored for ant " << ant->location << " is " << closestUnexplored << std::endl;
 
-            if(closestUnexplored == Location(-1,-1)) {
-                closestUnexplored = Location(0,0);
-            }
-
             state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
 
             target = closestUnexplored;
+        }
+
+        // nothing to explore
+        if(target == Location(-1,-1)) {
+
+            for (const auto &item: state->hillsDestination) {
+                target = item.second;
+                break;
+            }
         }
 
         //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
@@ -69,6 +74,7 @@ public:
 
         state->bug << "Next location: " << nextLoc << std::endl;
         state->makeMove(ant->location, nextLoc);
+
 
         return NodeStatus::RUNNING;
     }

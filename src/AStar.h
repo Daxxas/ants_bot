@@ -58,7 +58,7 @@ Location AStar::MakePath(State *state, const std::vector<std::vector<AStarLocati
 
 Location AStar::FindPath(State *state, Location *start, Location *target)
 {
-    if (*start == *target || state->grid[target->row][target->col].isWater)
+    if (*start == *target || state->grid[target->row][target->col].isWater || state->grid[target->row][target->col].ant == 0)
     {
         state->bug << "start is target " << std::endl;
         return Location(0,0);
