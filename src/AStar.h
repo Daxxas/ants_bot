@@ -43,14 +43,9 @@ Location AStar::MakePath(State *state, const std::vector<std::vector<AStarLocati
 
     while (nextLocation.hasParent)
     {
-        // state->bug << "current " << &current << " " << current.location << std::endl;
         current = nextLocation;
-        state->bug << " making path through " << current.location << std::endl;
-
         nextLocation = (*map)[current.parentLocation.row][current.parentLocation.col];
     }
-    // state->bug << "Constructing usable path " << std::endl;
-
     state->bug << " astar returning " << current.location << std::endl;
 
     return current.location;
@@ -58,7 +53,7 @@ Location AStar::MakePath(State *state, const std::vector<std::vector<AStarLocati
 
 Location AStar::FindPath(State *state, Location *start, Location *target)
 {
-    if (*start == *target || state->grid[target->row][target->col].isWater || state->grid[target->row][target->col].ant == 0)
+    if (*start == *target || state->grid[target->row][target->col].isWater) // || state->grid[target->row][target->col].ant == 0)
     {
         state->bug << "start is target " << std::endl;
         return Location(0,0);
@@ -139,10 +134,10 @@ Location AStar::FindPath(State *state, Location *start, Location *target)
                 }
 
                 // Avoid moving on other ants
-                if (state->grid[neighborPos.first][neighborPos.second].ant == 0)
-                {
-                    continue;
-                }
+                //if (state->grid[neighborPos.first][neighborPos.second].ant == 0)
+                //{
+                //    continue;
+                //}
 
                 Location neighborLocation = Location(neighborPos.first, neighborPos.second);
                 double neighborG = 0;

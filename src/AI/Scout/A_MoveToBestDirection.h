@@ -72,6 +72,10 @@ public:
             nextLoc = nextAstar;
         }
 
+        if(state->grid[nextLoc.row][nextLoc.col].ant == 0){
+            nextLoc = ant->location;
+        }
+
         state->bug << "Next location: " << nextLoc << std::endl;
         state->makeMove(ant->location, nextLoc);
 
