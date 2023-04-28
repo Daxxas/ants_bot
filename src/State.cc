@@ -46,6 +46,10 @@ void State::makeMove(const Location &loc, const Location &nextLoc)
     bug << "diffX: " << diffX << " diffY: " << diffY << endl;
     bug << "rows: " << rows - 1 << " cols: " << cols - 1 << endl;
 
+    if(diffX ==0 && diffY == 0) {
+        return;
+    }
+
     if (diffX == 1 || (diffX == 1 - cols && diffY == 0))
     {
         bug << "move " << CDIRECTIONS[1] << endl;

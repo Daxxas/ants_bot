@@ -3,6 +3,10 @@
 #include "../Bug.h"
 #include "BFS.h"
 
+bool IsSquareNotVisible(Square square){
+    return !square.isVisible;
+}
+
 class A_MoveToBestDirection : public BT_Node
 {
 public:
@@ -47,26 +51,12 @@ public:
             state->bug << "ant " << ant->location << " not best for any food" << std::endl;
 
             // find closest unexplored square
-            Location closestUnexplored = Location(-1, -1);
-            float closestUnexploredDistance = 1000000;
+            Location closestUnexplored = BFS::GetBFSPosition(state, &ant->location, 20, &IsSquareNotVisible);
 
-            for (int row = 0; row < state->rows; row++)
-            {
-                for (int col = 0; col < state->cols; col++)
-                {
-                    if (state->grid[row][col].isVisible || state->grid[row][col].isWater)
-                    {
-                        continue;
-                    }
+            state->bug << "closestUnexplored for ant " << ant->location << " is " << closestUnexplored << std::endl;
 
-                    float distance = ant->location.manhattanDistance(Location(row, col), state->rows, state->cols);
-
-                    if (closestUnexploredDistance > distance)
-                    {
-                        closestUnexplored = Location(row, col);
-                        closestUnexploredDistance = distance;
-                    }
-                }
+            if(closestUnexplored == Location(-1,-1)) {
+                closestUnexplored = Location(0,0);
             }
 
             state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;

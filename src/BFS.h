@@ -12,25 +12,31 @@
 
 class BFS {
 public:
-    static std::vector<std::vector<int>>* GenerateBFS(State* state, Location* start, int maxDistance);
+    static Location GetBFSPosition(State* state, Location* start, int maxDistance, bool (*condition)(Square));
 };
 
-std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start, int maxDistance) {
+Location BFS::GetBFSPosition(State *state, Location *start, int maxDistance, bool (*condition)(Square)) {
     state->bug << "Generating BFS" << std::endl;
 
-    std::vector<Location> toVisit;
-    auto* bfsMap = new std::vector<std::vector<int>>(state->rows, std::vector<int>(state->cols, -1));
+    std::queue<Location> toVisit;
+    auto bfsMap = std::vector<std::vector<int>>(state->rows, std::vector<int>(state->cols, -1));
 
-    toVisit.push_back(*start);
-    (*bfsMap)[start->row][start->col] = 0;
+    toVisit.push(*start);
+    bfsMap[start->row][start->col] = 0;
 
     while(!toVisit.empty()) {
         Location current = toVisit.front();
-        toVisit.erase(toVisit.begin());
+        toVisit.pop();
 
-        // no need to go further than the number  of turns
-        if((*bfsMap)[current.row][current.col] > maxDistance)
+        if(bfsMap[current.row][current.col] > maxDistance) {
             continue;
+        }
+
+        if(condition(state->grid[current.row][current.col])) {
+            state->bug << "BFS found value " << bfsMap[current.row][current.col] << std::endl;
+
+            return Location(current.row,current.col);
+        }
 
         for (int i = 0; i < 4; i++) {
             Location next = current;
@@ -47,13 +53,7 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start, i
                 next.col += state->cols;
             }
 
-            auto duplicate = std::find(toVisit.begin(), toVisit.end(), next);
-
-            if(duplicate != toVisit.end()) {
-                continue;
-            }
-
-            if ((*bfsMap)[next.row][next.col] >= 0) { // already visited
+            if (bfsMap[next.row][next.col] >= 0) { // already visited
                 continue;
             }
 
@@ -61,13 +61,13 @@ std::vector<std::vector<int>>* BFS::GenerateBFS(State *state, Location *start, i
                 continue;
             }
 
-            (*bfsMap)[next.row][next.col] = (*bfsMap)[current.row][current.col] + 1;
-            toVisit.push_back(next);
+            bfsMap[next.row][next.col] = bfsMap[current.row][current.col] + 1;
+            toVisit.push(next);
         }
     }
 
-    state->bug << "Generated BFS" << std::endl;
-    return bfsMap;
+    state->bug << "BFS can't reach target" << std::endl;
+    return Location(-1,-1);
 }
 
 
