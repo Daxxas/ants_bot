@@ -17,6 +17,8 @@
 #include "Square.h"
 #include "Location.h"
 #include "Ant.h"
+#include "Location.h"
+#include "BFS.h"
 
 /*
     constants
@@ -68,6 +70,7 @@ struct State
 
     void saveHillsDestination();
     void applyHillsDestination();
+    void updateFoodDestination();
 
     void updateVisionInformation();
 };

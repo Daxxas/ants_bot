@@ -26,17 +26,17 @@ public:
 
     ant->setHillDestination(hillLocation.row, hillLocation.col);
 
-    auto path = AStar::FindPath(state, &ant->location, &hillLocation);
+    Location nextAstar = AStar::FindPath(state, &ant->location, &hillLocation);
 
     Location nextLoc;
     // No path found to destination, stay in place
-    if (path->size() <= 0)
+    if (nextAstar == Location(0,0))
     {
       nextLoc = ant->location;
     }
     else
     {
-      nextLoc = (*path)[0];
+      nextLoc = nextAstar;
     }
 
     state->makeMove(ant->location, nextLoc);

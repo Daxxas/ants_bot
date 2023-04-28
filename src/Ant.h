@@ -12,6 +12,7 @@ struct Ant
 {
   bool hasHillDestination = false;
   Location hillDestination;
+  Location foodDestination = Location(-1,-1);
 
   std::vector<std::vector<int>> *bfsMap;
 

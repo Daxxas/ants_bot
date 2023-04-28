@@ -344,3 +344,21 @@ void State::applyHillsDestination()
         }
     }
 }
+
+bool IsSquareMyAnt(Square square){
+    return square.ant == 0;
+}
+
+void State::updateFoodDestination() {
+    for (auto foodPos : food)
+    {
+        Location closestAnt = BFS::GetBFSPosition(this, &foodPos, viewradius, &IsSquareMyAnt);
+
+        for (int i = 0; i < myAnts.size(); ++i) {
+            if (myAnts[i].location == closestAnt && myAnts[i].foodDestination == Location(-1,-1)) {
+                myAnts[i].foodDestination = foodPos;
+                break;
+            }
+        }
+    }
+}

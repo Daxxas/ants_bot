@@ -24,48 +24,44 @@ public:
 class AStar
 {
 public:
-    static std::vector<Location> *FindPath(State *state, Location *start, Location *target);
+    static Location FindPath(State *state, Location *start, Location *target);
 
-    static std::vector<Location> *MakePath(State *state, const std::vector<std::vector<AStarLocation>> *map, Location *target);
+    static Location MakePath(State *state, const std::vector<std::vector<AStarLocation>> *map, Location *target);
 };
 
-std::vector<Location> *AStar::MakePath(State *state, const std::vector<std::vector<AStarLocation>> *map, Location *target)
+Location AStar::MakePath(State *state, const std::vector<std::vector<AStarLocation>> *map, Location *target)
 {
     state->bug << "Making path " << std::endl;
-    std::stack<AStarLocation> path;
-    auto *usablePath = new std::vector<Location>();
 
     int x = target->row;
     int y = target->col;
-    AStarLocation current = (*map)[x][y];
+    AStarLocation current;
+    AStarLocation nextLocation = (*map)[x][y];
+
 
     bool noParent = false;
 
-    while (!noParent)
+    while (nextLocation.hasParent)
     {
         // state->bug << "current " << &current << " " << current.location << std::endl;
-        path.push(current);
-        current = (*map)[current.parentLocation.row][current.parentLocation.col];
-        noParent = !current.hasParent;
+        current = nextLocation;
+        state->bug << " making path through " << current.location << std::endl;
+
+        nextLocation = (*map)[current.parentLocation.row][current.parentLocation.col];
     }
     // state->bug << "Constructing usable path " << std::endl;
 
-    while (!path.empty())
-    {
-        AStarLocation top = path.top();
-        path.pop();
-        usablePath->emplace_back(top.location);
-    }
-    return usablePath;
+    state->bug << " astar returning " << current.location << std::endl;
+
+    return current.location;
 }
 
-std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *target)
+Location AStar::FindPath(State *state, Location *start, Location *target)
 {
     if (*start == *target || state->grid[target->row][target->col].isWater)
     {
-        std::vector<Location> *returnVec = new std::vector<Location>();
-        returnVec->push_back(*start);
-        return returnVec;
+        state->bug << "start is target " << std::endl;
+        return Location(0,0);
     }
 
     state->bug << "Finding path from " << (*start) << " to " << (*target) << std::endl;
@@ -159,6 +155,8 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
                     allMap[neighborPos.first][neighborPos.second].parentLocation = currentLoc.location;
                     allMap[neighborPos.first][neighborPos.second].hasParent = true;
 
+                    state->bug << "Astar found path :)" << std::endl;
+
                     return MakePath(state, &allMap, target);
                 }
                 else
@@ -204,7 +202,7 @@ std::vector<Location> *AStar::FindPath(State *state, Location *start, Location *
     }
 
     state->bug << "No path found!" << std::endl;
-    return new std::vector<Location>();
+    return Location(0,0);
 }
 
 #endif // ANTS_BOT_ASTAR_H

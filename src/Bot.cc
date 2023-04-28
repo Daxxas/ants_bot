@@ -22,6 +22,7 @@ void Bot::playGame()
     {
         state.updateVisionInformation();
         state.applyHillsDestination();
+        state.updateFoodDestination();
         makeMoves();
         state.saveHillsDestination();
         endTurn();

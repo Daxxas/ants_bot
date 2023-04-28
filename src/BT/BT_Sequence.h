@@ -12,7 +12,7 @@ public:
         {
             BT_Node *child = children[i];
             NodeStatus status = child->run(ant, state);
-            state->bug << "Sequence: " << child << " " << status << std::endl;
+            //state->bug << "Sequence: " << child << " " << status << std::endl;
 
             // The generic BT_Sequence implementation.
             if (status == NodeStatus::FAILURE) // If one child fails, then enter operation run() fails.  Success only results if all children succeed.

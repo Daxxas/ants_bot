@@ -14,7 +14,7 @@ public:
             BT_Node *child = children[i];
 
             NodeStatus status = child->run(ant, state);
-            state->bug << "Sequence: " << child << " " << status << std::endl;
+            //state->bug << "Sequence: " << child << " " << status << std::endl;
 
             // The generic BT_Selector implementation
             if (status == NodeStatus::SUCCESS)
