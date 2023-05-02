@@ -4,7 +4,7 @@ project(ants_bot)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
-add_definitions(-DDEBUG)
+#add_definitions(-DDEBUG)
 
 include_directories(src)
 include_directories(src/AI)
