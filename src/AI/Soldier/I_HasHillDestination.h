@@ -1,5 +1,6 @@
 #include "../../BT/BT_Node.h"
 
+// Return SUCCESS if the ant has a hill destination, FAILURE otherwise
 class I_HasHillDestination : public BT_Node
 {
 public:
