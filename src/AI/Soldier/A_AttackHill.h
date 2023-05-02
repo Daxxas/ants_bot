@@ -2,6 +2,7 @@
 
 #include "../../AStar.h"
 
+// If an hill is nearby, attack it
 class A_AttackHill : public BT_Node
 {
 public:
@@ -9,6 +10,7 @@ public:
   {
     state->bug << "A_AttackHill" << std::endl;
 
+    // Find if there is an enemy hill nearby
     bool hasEnnemyHill = false;
 
     Location hillLocation;
@@ -24,8 +26,10 @@ public:
       }
     }
 
+    // Set the hill destination of the ant for next moves
     ant->setHillDestination(hillLocation.row, hillLocation.col);
 
+    // Find the path to the hill and move to it
     auto path = AStar::FindPath(state, &ant->location, &hillLocation);
 
     Location nextLoc;

@@ -15,21 +15,25 @@ public:
         // target closest food if I'm the best ant
         for (auto food : state->food)
         {
-            if(target != Location(-1, -1)) {
+            if (target != Location(-1, -1))
+            {
                 // if new food is closer than current target, check if need to change target
-                if(ant->location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(target, state->rows, state->cols)) {
+                if (ant->location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(target, state->rows, state->cols))
+                {
                     state->bug << "food " << food << " is closer than " << target << std::endl;
                 }
-                else {
+                else
+                {
                     continue;
                 }
             }
 
-            for(auto myAnt : state->myAnts)
+            for (auto myAnt : state->myAnts)
             {
                 // if an ant is closer to the food, I'm not the one for it
-                if (myAnt.location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(food, state->rows, state->cols)) {
-                    target = Location(-1,-1);
+                if (myAnt.location.manhattanDistance(food, state->rows, state->cols) < ant->location.manhattanDistance(food, state->rows, state->cols))
+                {
+                    target = Location(-1, -1);
                     break;
                 }
 
@@ -40,10 +44,10 @@ public:
 
         state->bug << "final food target for ant " << ant->location << " is " << target << std::endl;
 
-
         // Ant isn't the best for any food, so should explore/cover map
-        if(target == Location(-1, -1)) {
-            target = Location(0,0); // Default location in case something goes wrong
+        if (target == Location(-1, -1))
+        {
+            target = Location(0, 0); // Default location in case something goes wrong
             state->bug << "ant " << ant->location << " not best for any food" << std::endl;
 
             // find closest unexplored square
@@ -69,12 +73,12 @@ public:
                 }
             }
 
-            state->bug << "Final closestUnexplored: " << closestUnexplored  << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater  << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
+            state->bug << "Final closestUnexplored: " << closestUnexplored << " isWater: " << state->grid[closestUnexplored.row][closestUnexplored.col].isWater << " isVisible: " << state->grid[closestUnexplored.row][closestUnexplored.col].isVisible << std::endl;
 
             target = closestUnexplored;
         }
 
-        //state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
+        // state->bug << "Ant: " << ant->location << " Food: " << bestFood << " distance " << bestFoodDistance << std::endl;
 
         std::vector<Location> *path = AStar::FindPath(state, &ant->location, &target);
 
@@ -82,18 +86,20 @@ public:
 
         Location nextLoc;
         // No path found to destination
-        if(path->size() <= 0) {
+        if (path->size() <= 0)
+        {
             // Go to opposite direction
             int diffX = ant->location.row - target.row;
             int diffY = ant->location.col - target.col;
 
-            nextLoc = ant->location + Location(diffX/abs(diffX), diffY/abs(diffY));
-            std::pair<int,int> correctedLoc = state->correctPos(nextLoc.row, nextLoc.col);
+            nextLoc = ant->location + Location(diffX / abs(diffX), diffY / abs(diffY));
+            std::pair<int, int> correctedLoc = state->correctPos(nextLoc.row, nextLoc.col);
             nextLoc = Location(correctedLoc.first, correctedLoc.second);
 
             state->bug << "No path found to destination, changing destination to " << nextLoc << std::endl;
         }
-        else {
+        else
+        {
             nextLoc = (*path)[0];
         }
 

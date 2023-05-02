@@ -3,12 +3,7 @@
 #include <algorithm>
 #include "../../AStar.h"
 
-struct CloseAnd
-{
-  Ant *ant;
-  float distance;
-};
-
+// Attack the closest enemy
 class A_AttackEnnemy : public BT_Node
 {
 public:
@@ -21,6 +16,7 @@ public:
     std::vector<std::pair<int, int>> possiblePositions;
     std::vector<float> distance;
 
+    // Check all tiles around the ant to check if ennemy is there, and calculate distance
     for (int i = -sizeOfSquare; i < sizeOfSquare + 1; i++)
     {
       for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
@@ -38,6 +34,7 @@ public:
       }
     }
 
+    // Find the closest ant
     std::pair<int, int> bestPos = possiblePositions[0];
     float bestDistance = distance[0];
 
@@ -50,6 +47,7 @@ public:
       }
     }
 
+    // Move to the closest ant
     Location loc = Location(bestPos.first, bestPos.second);
 
     auto path = AStar::FindPath(state, &ant->location, &loc);
