@@ -1,6 +1,7 @@
 #include "../../BT/BT_Node.h"
 #include "../../AStar.h"
 
+// Walk to and hill if there is an HillDestination
 class A_WalkToHillDestination : public BT_Node
 {
 public:

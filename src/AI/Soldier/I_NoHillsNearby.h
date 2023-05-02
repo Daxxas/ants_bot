@@ -1,5 +1,6 @@
 #include "../../BT/BT_Node.h"
 
+// Check if there is an ennemy hill closest than ANT_TO_HILL_DISTANCE
 class I_NoHillsNearby : public BT_Node
 {
 public:
@@ -9,6 +10,7 @@ public:
 
     bool hasEnnemyHill = false;
 
+    // Loop in all the hills
     for (int i = 0; i < state->enemyHills.size(); i++)
     {
       if (state->distance(ant->location, state->enemyHills[i]) < ANT_TO_HILL_DISTANCE)

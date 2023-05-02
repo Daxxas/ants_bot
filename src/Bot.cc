@@ -42,6 +42,7 @@ void Bot::makeMoves()
     {
         state.bug << "Ant n°" << ant << " " << state.myAnts[ant].location << " at turn " << state.turn << " ===============================" << endl;
 
+        // Run the Behaviour Tree for each ant
         aiAnt.run(&state.myAnts[ant], &state);
     }
 

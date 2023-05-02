@@ -10,6 +10,7 @@
 
 struct Ant
 {
+  // Hill Destination: Prio destination for the next turn to focus hills
   bool hasHillDestination = false;
   Location hillDestination;
 

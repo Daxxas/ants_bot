@@ -1,5 +1,6 @@
 #include "../../BT/BT_Node.h"
 
+// Check around to see if there is an ennemy nearby
 class I_NoEnnemyNearby : public BT_Node
 {
 public:
@@ -11,6 +12,7 @@ public:
 
         bool hasEnnemy = false;
 
+        // Check the position near
         for (int i = -sizeOfSquare; i < sizeOfSquare + 1; i++)
         {
             for (int j = -sizeOfSquare; j < sizeOfSquare + 1; j++)
