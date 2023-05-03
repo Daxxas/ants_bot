@@ -3,8 +3,8 @@
 
 #include <fstream>
 
-#ifndef DEBUG
-    //#define DEBUG
+#ifndef MY_DEBUG
+    //#define MY_DEBUG
 #endif
 
 /*
@@ -30,7 +30,7 @@ struct Bug
     //opens the specified file
     inline void open(const std::string &filename)
     {
-        #ifdef DEBUG
+        #ifdef MY_DEBUG
             file.open(filename.c_str());
         #endif
     };
@@ -38,7 +38,7 @@ struct Bug
     //closes the ofstream
     inline void close()
     {
-        #ifdef DEBUG
+        #ifdef MY_DEBUG
             file.close();
         #endif
     };
@@ -47,7 +47,7 @@ struct Bug
 //output function for endl
 inline Bug& operator<<(Bug &bug, std::ostream& (*manipulator)(std::ostream&))
 {
-    #ifdef DEBUG
+    #ifdef MY_DEBUG
         bug.file << manipulator;
     #endif
 
@@ -58,7 +58,7 @@ inline Bug& operator<<(Bug &bug, std::ostream& (*manipulator)(std::ostream&))
 template <class T>
 inline Bug& operator<<(Bug &bug, const T &t)
 {
-    #ifdef DEBUG
+    #ifdef MY_DEBUG
         bug.file << t;
     #endif
 
