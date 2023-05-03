@@ -177,6 +177,30 @@ src/Ant.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ants_bot.dir/build.make CMakeFiles/ants_bot.dir/src/Ant.cc.s
 .PHONY : src/Ant.cc.s
 
+src/BFS.o: src/BFS.cc.o
+.PHONY : src/BFS.o
+
+# target to build an object file
+src/BFS.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ants_bot.dir/build.make CMakeFiles/ants_bot.dir/src/BFS.cc.o
+.PHONY : src/BFS.cc.o
+
+src/BFS.i: src/BFS.cc.i
+.PHONY : src/BFS.i
+
+# target to preprocess a source file
+src/BFS.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ants_bot.dir/build.make CMakeFiles/ants_bot.dir/src/BFS.cc.i
+.PHONY : src/BFS.cc.i
+
+src/BFS.s: src/BFS.cc.s
+.PHONY : src/BFS.s
+
+# target to generate assembly for a file
+src/BFS.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ants_bot.dir/build.make CMakeFiles/ants_bot.dir/src/BFS.cc.s
+.PHONY : src/BFS.cc.s
+
 src/Bot.o: src/Bot.cc.o
 .PHONY : src/Bot.o
 
@@ -264,6 +288,9 @@ help:
 	@echo "... src/Ant.o"
 	@echo "... src/Ant.i"
 	@echo "... src/Ant.s"
+	@echo "... src/BFS.o"
+	@echo "... src/BFS.i"
+	@echo "... src/BFS.s"
 	@echo "... src/Bot.o"
 	@echo "... src/Bot.i"
 	@echo "... src/Bot.s"

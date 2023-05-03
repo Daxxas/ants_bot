@@ -44,6 +44,11 @@ void Bot::makeMoves()
 
         // Run the Behaviour Tree for each ant
         aiAnt.run(&state.myAnts[ant], &state);
+
+        if (state.timer.getTime() > 490)
+        {
+            break;
+        }
     }
 
     state.bug << "time taken: " << state.timer.getTime() << "ms" << endl
